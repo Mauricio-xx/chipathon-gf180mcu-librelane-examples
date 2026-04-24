@@ -1,0 +1,52 @@
+# Reference shape of the delta applied on top of the padring fork's
+# `librelane/config.yaml` to teach LibreLane about the two user
+# macros (counter + alu_macro). Shows the expected structure; the
+# notebook `04_counter_alu_multimacro.ipynb` actually builds and
+# writes the merged config at run time with absolute paths resolved
+# to the hardening output directories (`<HOST_MULTIMACRO>/build/...`).
+#
+# The chip_top.sv of the fork instantiates chip_core as `i_chip_core`;
+# our chip_core_multi.sv labels the two user-macro instances
+# `u_counter` and `u_alu`, hence the dotted hierarchical names below.
+
+VERILOG_FILES:
+  - dir::../src/chip_top.sv               # unchanged upstream padring wiring
+  - dir::../src/chip_core.sv              # = chip_core_multi.sv after the notebook swap
+  - dir::../src/counter.sv                # copied into fork src/ by the notebook
+  - dir::../src/alu.sv
+  - dir::../src/alu_macro.sv
+
+MACROS:
+  counter:
+    gds: ["<HOST_MULTIMACRO>/build/counter/final/gds/counter.gds"]
+    lef: ["<HOST_MULTIMACRO>/build/counter/final/lef/counter.lef"]
+    vh:  ["<HOST_MULTIMACRO>/build/counter/final/nl/counter.nl.v"]
+    lib:
+      "*":
+        - "<HOST_MULTIMACRO>/build/counter/final/lib/tt_025C_3v30/counter.lib"
+    instances:
+      "i_chip_core.u_counter":
+        location: [1000, 1000]
+        orientation: N
+
+  alu_macro:
+    gds: ["<HOST_MULTIMACRO>/build/alu_macro/final/gds/alu_macro.gds"]
+    lef: ["<HOST_MULTIMACRO>/build/alu_macro/final/lef/alu_macro.lef"]
+    vh:  ["<HOST_MULTIMACRO>/build/alu_macro/final/nl/alu_macro.nl.v"]
+    lib:
+      "*":
+        - "<HOST_MULTIMACRO>/build/alu_macro/final/lib/tt_025C_3v30/alu_macro.lib"
+    instances:
+      "i_chip_core.u_alu":
+        location: [1800, 1000]
+        orientation: N
+
+# Added on top of the fork's existing PDN_MACRO_CONNECTIONS (empty
+# list) so chip_id / logo stay covered by the default macro grid.
+PDN_MACRO_CONNECTIONS:
+  - inst_regex: ".*u_counter.*"
+    power: VDD
+    ground: VSS
+  - inst_regex: ".*u_alu.*"
+    power: VDD
+    ground: VSS
