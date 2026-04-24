@@ -1,0 +1,223 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" font-family="Helvetica,Arial,sans-serif">
+  <title>Chipathon workshop slot - pad map</title>
+  <desc>
+    Top-down view of the chipathon-2026 workshop slot die (2935 x 2935
+    um) showing the 4 pad edges: 24 pads on PAD_SOUTH, 22 on PAD_EAST,
+    22 on PAD_NORTH, 22 on PAD_WEST. 4 corners plus clk_pad, rst_n_pad
+    and one spare input in the SW bundle. LibreLane reads pad lists
+    clockwise from the SW corner.
+  </desc>
+
+  <style>
+    .title     { font-size:20px; fill:#111; text-anchor:middle; font-weight:bold; }
+    .subtitle  { font-size:13px; fill:#444; text-anchor:middle; font-style:italic; }
+    .die       { fill:#fbfbfd; stroke:#003b73; stroke-width:2.5; }
+    .core      { fill:#eefdef; stroke:#156b2e; stroke-width:1.5; stroke-dasharray:6,4; }
+    .pad-label { font-size:10px; fill:#111; text-anchor:middle; }
+    .edge-label{ font-size:13px; fill:#003b73; font-weight:bold; text-anchor:middle; }
+    .corner    { fill:#555; stroke:#333; stroke-width:1; }
+    .ana       { fill:#c6e2ff; stroke:#003b73; stroke-width:0.8; }
+    .bidir     { fill:#fff3c4; stroke:#b26500; stroke-width:0.8; }
+    .dvdd      { fill:#ffd1d1; stroke:#a00; stroke-width:0.8; }
+    .dvss      { fill:#d6d6d6; stroke:#333; stroke-width:0.8; }
+    .iopad     { fill:#d4f5dd; stroke:#156b2e; stroke-width:0.8; }
+    .legend    { font-size:11px; fill:#222; }
+    .arrow-cw  { fill:none; stroke:#b00; stroke-width:1.8; marker-end:url(#arrowhead-red); }
+    .note      { font-size:11px; fill:#b00; font-weight:bold; }
+  </style>
+
+  <defs>
+    <marker id="arrowhead-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L0,10 L9,5 z" fill="#b00"/>
+    </marker>
+  </defs>
+
+  <!-- header -->
+  <text class="title"    x="400" y="30">Workshop slot - pad map</text>
+  <text class="subtitle" x="400" y="52">2935 x 2935 um die - mirror of JuanMoya/padring_gf180</text>
+
+  <!-- die -->
+  <rect class="die"  x="100" y="100" width="600" height="600" rx="4"/>
+  <!-- core area -->
+  <rect class="core" x="165" y="165" width="470" height="470" rx="4"/>
+  <text x="400" y="410" font-size="14" fill="#156b2e" text-anchor="middle" font-weight="bold">CORE</text>
+  <text x="400" y="430" font-size="11" fill="#156b2e" text-anchor="middle">[442 .. 2493] x [442 .. 2493] um</text>
+  <text x="400" y="450" font-size="11" fill="#156b2e" text-anchor="middle">2051 x 2051 um</text>
+  <text x="400" y="470" font-size="10" fill="#156b2e" text-anchor="middle" font-style="italic">
+    chip_core + chip_id + wafer.space logo placed here
+  </text>
+
+  <!-- corners (small dark squares) -->
+  <rect class="corner" x="95"  y="95"  width="16" height="16"/>
+  <rect class="corner" x="689" y="95"  width="16" height="16"/>
+  <rect class="corner" x="689" y="689" width="16" height="16"/>
+  <rect class="corner" x="95"  y="689" width="16" height="16"/>
+
+  <!-- PAD_SOUTH (bottom edge, SW -> SE, 24 pads) -->
+  <text class="edge-label" x="400" y="760">PAD_SOUTH  (24 pads, SW to SE)</text>
+  <!-- pad row -->
+  <g>
+    <!-- 3 input pads first (clk, rst_n, inputs[0]) -->
+    <rect class="iopad" x="118" y="702" width="18" height="20"/>
+    <rect class="iopad" x="138" y="702" width="18" height="20"/>
+    <rect class="iopad" x="158" y="702" width="18" height="20"/>
+    <!-- 10 analog -->
+    <g fill="#c6e2ff" stroke="#003b73" stroke-width="0.8">
+      <rect x="178" y="702" width="18" height="20"/>
+      <rect x="198" y="702" width="18" height="20"/>
+      <rect x="218" y="702" width="18" height="20"/>
+      <rect x="238" y="702" width="18" height="20"/>
+      <rect x="258" y="702" width="18" height="20"/>
+      <rect x="278" y="702" width="18" height="20"/>
+      <rect x="298" y="702" width="18" height="20"/>
+      <rect x="318" y="702" width="18" height="20"/>
+      <rect x="338" y="702" width="18" height="20"/>
+      <rect x="358" y="702" width="18" height="20"/>
+    </g>
+    <!-- dvdd, dvss -->
+    <rect class="dvdd" x="378" y="702" width="18" height="20"/>
+    <rect class="dvss" x="398" y="702" width="18" height="20"/>
+    <!-- 10 analog -->
+    <g fill="#c6e2ff" stroke="#003b73" stroke-width="0.8">
+      <rect x="418" y="702" width="18" height="20"/>
+      <rect x="438" y="702" width="18" height="20"/>
+      <rect x="458" y="702" width="18" height="20"/>
+      <rect x="478" y="702" width="18" height="20"/>
+      <rect x="498" y="702" width="18" height="20"/>
+      <rect x="518" y="702" width="18" height="20"/>
+      <rect x="538" y="702" width="18" height="20"/>
+      <rect x="558" y="702" width="18" height="20"/>
+      <rect x="578" y="702" width="18" height="20"/>
+      <rect x="598" y="702" width="18" height="20"/>
+    </g>
+  </g>
+
+  <!-- PAD_NORTH (top edge, NE -> NW i.e. right-to-left when reading clockwise, 22 pads) -->
+  <text class="edge-label" x="400" y="70">PAD_NORTH  (22 pads, NE to NW - reversed vs JuanMoya)</text>
+  <g>
+    <!-- 4 bidir -->
+    <g fill="#fff3c4" stroke="#b26500" stroke-width="0.8">
+      <rect x="118" y="78" width="18" height="20"/>
+      <rect x="138" y="78" width="18" height="20"/>
+      <rect x="158" y="78" width="18" height="20"/>
+      <rect x="178" y="78" width="18" height="20"/>
+    </g>
+    <!-- 6 analog -->
+    <g fill="#c6e2ff" stroke="#003b73" stroke-width="0.8">
+      <rect x="198" y="78" width="18" height="20"/>
+      <rect x="218" y="78" width="18" height="20"/>
+      <rect x="238" y="78" width="18" height="20"/>
+      <rect x="258" y="78" width="18" height="20"/>
+      <rect x="278" y="78" width="18" height="20"/>
+      <rect x="298" y="78" width="18" height="20"/>
+    </g>
+    <!-- dvss, dvdd -->
+    <rect class="dvss" x="318" y="78" width="18" height="20"/>
+    <rect class="dvdd" x="338" y="78" width="18" height="20"/>
+    <!-- 10 analog -->
+    <g fill="#c6e2ff" stroke="#003b73" stroke-width="0.8">
+      <rect x="358" y="78" width="18" height="20"/>
+      <rect x="378" y="78" width="18" height="20"/>
+      <rect x="398" y="78" width="18" height="20"/>
+      <rect x="418" y="78" width="18" height="20"/>
+      <rect x="438" y="78" width="18" height="20"/>
+      <rect x="458" y="78" width="18" height="20"/>
+      <rect x="478" y="78" width="18" height="20"/>
+      <rect x="498" y="78" width="18" height="20"/>
+      <rect x="518" y="78" width="18" height="20"/>
+      <rect x="538" y="78" width="18" height="20"/>
+    </g>
+  </g>
+
+  <!-- PAD_EAST (right edge, SE -> NE, 22 pads) -->
+  <text class="edge-label" x="790" y="400" transform="rotate(90 790 400)">PAD_EAST  (22 pads, SE to NE)</text>
+  <g>
+    <!-- 10 analog going up from south -->
+    <g fill="#c6e2ff" stroke="#003b73" stroke-width="0.8">
+      <rect x="702" y="678" width="20" height="18"/>
+      <rect x="702" y="658" width="20" height="18"/>
+      <rect x="702" y="638" width="20" height="18"/>
+      <rect x="702" y="618" width="20" height="18"/>
+      <rect x="702" y="598" width="20" height="18"/>
+      <rect x="702" y="578" width="20" height="18"/>
+      <rect x="702" y="558" width="20" height="18"/>
+      <rect x="702" y="538" width="20" height="18"/>
+      <rect x="702" y="518" width="20" height="18"/>
+      <rect x="702" y="498" width="20" height="18"/>
+    </g>
+    <rect class="dvss" x="702" y="478" width="20" height="18"/>
+    <rect class="dvdd" x="702" y="458" width="20" height="18"/>
+    <!-- 8 bidir -->
+    <g fill="#fff3c4" stroke="#b26500" stroke-width="0.8">
+      <rect x="702" y="438" width="20" height="18"/>
+      <rect x="702" y="418" width="20" height="18"/>
+      <rect x="702" y="398" width="20" height="18"/>
+      <rect x="702" y="378" width="20" height="18"/>
+      <rect x="702" y="358" width="20" height="18"/>
+      <rect x="702" y="338" width="20" height="18"/>
+      <rect x="702" y="318" width="20" height="18"/>
+      <rect x="702" y="298" width="20" height="18"/>
+    </g>
+    <!-- 2 analog -->
+    <g fill="#c6e2ff" stroke="#003b73" stroke-width="0.8">
+      <rect x="702" y="278" width="20" height="18"/>
+      <rect x="702" y="258" width="20" height="18"/>
+    </g>
+  </g>
+
+  <!-- PAD_WEST (left edge, NW -> SW, 22 pads) -->
+  <text class="edge-label" x="22" y="400" transform="rotate(-90 22 400)">PAD_WEST  (22 pads, NW to SW - reversed vs JuanMoya)</text>
+  <g>
+    <!-- 2 analog at top -->
+    <g fill="#c6e2ff" stroke="#003b73" stroke-width="0.8">
+      <rect x="78" y="118" width="20" height="18"/>
+      <rect x="78" y="138" width="20" height="18"/>
+    </g>
+    <!-- 8 bidir -->
+    <g fill="#fff3c4" stroke="#b26500" stroke-width="0.8">
+      <rect x="78" y="158" width="20" height="18"/>
+      <rect x="78" y="178" width="20" height="18"/>
+      <rect x="78" y="198" width="20" height="18"/>
+      <rect x="78" y="218" width="20" height="18"/>
+      <rect x="78" y="238" width="20" height="18"/>
+      <rect x="78" y="258" width="20" height="18"/>
+      <rect x="78" y="278" width="20" height="18"/>
+      <rect x="78" y="298" width="20" height="18"/>
+    </g>
+    <rect class="dvdd" x="78" y="318" width="20" height="18"/>
+    <rect class="dvss" x="78" y="338" width="20" height="18"/>
+    <!-- 10 analog -->
+    <g fill="#c6e2ff" stroke="#003b73" stroke-width="0.8">
+      <rect x="78" y="358" width="20" height="18"/>
+      <rect x="78" y="378" width="20" height="18"/>
+      <rect x="78" y="398" width="20" height="18"/>
+      <rect x="78" y="418" width="20" height="18"/>
+      <rect x="78" y="438" width="20" height="18"/>
+      <rect x="78" y="458" width="20" height="18"/>
+      <rect x="78" y="478" width="20" height="18"/>
+      <rect x="78" y="498" width="20" height="18"/>
+      <rect x="78" y="518" width="20" height="18"/>
+      <rect x="78" y="538" width="20" height="18"/>
+    </g>
+  </g>
+
+  <!-- clockwise arrow inside, placed above CORE so it does not clash with PAD_SOUTH label -->
+  <path class="arrow-cw" d="M 225 255  Q 400 205 575 255"/>
+  <text class="note" x="400" y="200" text-anchor="middle">LibreLane reads pad lists CW from SW</text>
+
+  <!-- legend -->
+  <g transform="translate(40 760)">
+    <rect class="ana"   x="0"   y="0" width="14" height="14"/>
+    <text class="legend" x="20"  y="12">analog (60)</text>
+    <rect class="bidir" x="110" y="0" width="14" height="14"/>
+    <text class="legend" x="130" y="12">bidir (20)</text>
+    <rect class="dvdd"  x="210" y="0" width="14" height="14"/>
+    <text class="legend" x="230" y="12">DVDD (4)</text>
+    <rect class="dvss"  x="300" y="0" width="14" height="14"/>
+    <text class="legend" x="320" y="12">DVSS (4)</text>
+    <rect class="iopad" x="390" y="0" width="14" height="14"/>
+    <text class="legend" x="410" y="12">clk / rst_n / input (3)</text>
+    <rect class="corner" x="560" y="0" width="14" height="14"/>
+    <text class="legend" x="580" y="12">corner (4)</text>
+  </g>
+</svg>

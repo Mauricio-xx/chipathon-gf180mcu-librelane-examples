@@ -1,0 +1,62 @@
+chipathon-gf180mcu-librelane-examples
+Copyright 2026 Mauricio Montanares
+
+This product includes software developed by third parties:
+
+1. wafer-space / gf180mcu-project-template
+   Copyright 2025 Leo Moser <leo.moser@pm.me> and contributors
+   Licensed under the Apache License, Version 2.0.
+   Source: https://github.com/wafer-space/gf180mcu-project-template
+
+   Notebooks 02 and 03 reference and (in notebook 03) clone this
+   upstream project. The chipathon-2026 padring fork consumed by
+   notebooks 00, 03, and 04 is itself a derivation of it.
+
+2. Mauricio-xx / chipathon-2026-gf180mcu-padring
+   Copyright 2026 Mauricio Montanares
+   Licensed under the Apache License, Version 2.0.
+   Source: https://github.com/Mauricio-xx/chipathon-2026-gf180mcu-padring
+   Pad layout derived from JuanMoya/padring_gf180 (see below).
+
+3. JuanMoya / padring_gf180
+   Copyright 2025 Juan Moya
+   Licensed under the Apache License, Version 2.0.
+   Source: https://github.com/JuanMoya/padring_gf180
+   The workshop pad layout exercised by notebooks 00, 03, 04 is a
+   port of that configuration. See the padring fork's CREDITS.md
+   for the detailed per-artifact breakdown.
+
+4. hpretl / iic-osic-tools (Docker image)
+   The Docker image `hpretl/iic-osic-tools:next` is the runtime
+   used by every notebook in this repository. The image bundles
+   LibreLane, Yosys, OpenROAD, Magic, KLayout, Netgen, Icarus
+   Verilog, cocotb, Verilator, and ciel under their respective
+   open-source licenses.
+   Source: https://github.com/iic-jku/iic-osic-tools
+
+Repository-specific material
+----------------------------
+The following items were authored for this repository:
+
+- examples/04_counter_alu_multimacro/                (new)
+  rtl/counter.sv, rtl/alu.sv, rtl/alu_macro.sv, rtl/chip_core_multi.sv,
+  tb/test_counter.py, tb/test_alu.py, tb/Makefile, tb/Makefile.cocotb,
+  librelane/counter_macro.yaml, librelane/alu_macro.yaml,
+  librelane/chip_top_multi_patch.yaml,
+  04_counter_alu_multimacro.ipynb.
+- diagrams/*.svg                                     (new)
+- docs/*.md                                          (new)
+- scripts/bootstrap_container.sh                     (new)
+- scripts/verify_prereqs.sh                          (new)
+- README.md / NOTICE / CREDITS.md / AUTHORS.md       (new)
+
+Notebooks 00, 01, 02, 03 are adaptations of notebooks that first
+shipped in the companion `eda-agents` tutorial tree
+(tutorials/rtl2gds-gf180-docker/demo/). Adaptations cover the clone
+step for the chipathon-2026 padring fork, path handling, and
+cross-references to notebook 04. The content and authorship of the
+originals is preserved; differences are visible in the diff against
+the eda-agents tree.
+
+All repository-specific material is copyright 2026 Mauricio Montanares
+and released under the Apache License, Version 2.0.

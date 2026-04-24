@@ -1,0 +1,12 @@
+__pycache__/
+.ipynb_checkpoints/
+*.pyc
+
+# cocotb
+sim_build/
+results.xml
+
+# LibreLane outputs (if anyone runs flows inside the repo)
+runs/
+final/
+build/

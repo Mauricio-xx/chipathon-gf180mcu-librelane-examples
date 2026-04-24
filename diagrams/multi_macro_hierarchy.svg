@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 640" font-family="Helvetica,Arial,sans-serif">
+  <title>Multi-macro hierarchy on the chipathon workshop slot</title>
+  <desc>
+    Hierarchy of the counter + ALU multi-macro example. Outer blue
+    frame = chipathon workshop slot padring (2935 x 2935 um). Green
+    frame = chip_top.sv (fixed, wires padring to chip_core). Grey
+    frame = chip_core_multi.sv (our integration). Orange frames =
+    independently hardened macros (counter, alu_macro). The dashed
+    arrow shows counter state feeding the ALU operands + op.
+  </desc>
+
+  <style>
+    .title      { font-size:20px; fill:#111; text-anchor:middle; font-weight:bold; }
+    .subtitle   { font-size:13px; fill:#444; text-anchor:middle; font-style:italic; }
+    .sect       { font-size:13px; fill:#111; font-weight:bold; }
+    .kv         { font-size:11px; fill:#333; font-family:monospace; }
+    .sub        { font-size:11px; fill:#555; }
+
+    .padring-frame { fill:#f5f9ff; stroke:#003b73; stroke-width:2; }
+    .padring-label { font-size:12px; fill:#003b73; font-weight:bold; }
+
+    .chiptop-frame { fill:#eefdef; stroke:#156b2e; stroke-width:2; }
+    .chiptop-label { font-size:12px; fill:#156b2e; font-weight:bold; }
+
+    .core-frame    { fill:#f7f7f9; stroke:#555; stroke-width:1.5; stroke-dasharray:4,3; }
+    .core-label    { font-size:12px; fill:#333; font-weight:bold; }
+
+    .macro-frame   { fill:#fff3e0; stroke:#b26500; stroke-width:1.8; }
+    .macro-label   { font-size:13px; fill:#b26500; font-weight:bold; text-anchor:middle; }
+
+    .wire          { fill:none; stroke:#555; stroke-width:1.5; marker-end:url(#arrowhead); }
+    .dataflow      { fill:none; stroke:#b00; stroke-width:2; stroke-dasharray:6,4; marker-end:url(#arrowhead-red); }
+    .flow-note     { font-size:11px; fill:#b00; font-weight:bold; }
+  </style>
+
+  <defs>
+    <marker id="arrowhead"  viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L0,10 L9,5 z" fill="#555"/>
+    </marker>
+    <marker id="arrowhead-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L0,10 L9,5 z" fill="#b00"/>
+    </marker>
+  </defs>
+
+  <!-- header -->
+  <text class="title"    x="450" y="30">Multi-macro hierarchy - chipathon workshop slot</text>
+  <text class="subtitle" x="450" y="52">counter + alu_macro, each hardened standalone, then integrated</text>
+
+  <!-- outer: workshop slot padring -->
+  <rect class="padring-frame" x="40" y="80" width="820" height="510" rx="8"/>
+  <text class="padring-label" x="55" y="102">workshop padring  (2935 x 2935 um die)</text>
+  <text class="sub" x="55" y="118">60 analog + 20 bidir + 4 DVDD + 4 DVSS + clk_pad + rst_n_pad + 4 corners</text>
+
+  <!-- pad edge hints -->
+  <text class="sub" x="450" y="145" text-anchor="middle">PAD_SOUTH</text>
+  <text class="sub" x="450" y="583" text-anchor="middle">PAD_NORTH</text>
+  <text class="sub" x="60"  y="345" writing-mode="tb" text-anchor="middle">PAD_WEST</text>
+  <text class="sub" x="838" y="345" writing-mode="tb" text-anchor="middle">PAD_EAST</text>
+
+  <!-- chip_top.sv band -->
+  <rect class="chiptop-frame" x="110" y="160" width="680" height="410" rx="6"/>
+  <text class="chiptop-label" x="125" y="180">chip_top.sv  (fixed - wires padring to chip_core)</text>
+  <text class="sub" x="125" y="196">clk / rst_n / bidir_out[19:0] / bidir_in[19:0] / analog[59:0]</text>
+
+  <!-- chip_core_multi band -->
+  <rect class="core-frame" x="150" y="220" width="600" height="330" rx="6"/>
+  <text class="core-label" x="165" y="240">chip_core_multi.sv  (your integration)</text>
+  <text class="sub" x="165" y="256">Instantiates the two user macros and maps outputs to bidir pads.</text>
+
+  <!-- counter macro box -->
+  <rect class="macro-frame" x="185" y="290" width="220" height="200" rx="6"/>
+  <text class="macro-label" x="295" y="315">u_counter</text>
+  <text class="sub"  x="205" y="340">macro = counter (8-bit)</text>
+  <text class="kv"   x="205" y="358">clk, rst_n, en</text>
+  <text class="kv"   x="205" y="374">q[7:0]</text>
+  <text class="sub"  x="205" y="400">standalone Classic flow:</text>
+  <text class="kv"   x="205" y="416">librelane counter_macro.yaml</text>
+  <text class="sub"  x="205" y="442">outputs for integration:</text>
+  <text class="kv"   x="205" y="458">counter.gds / .lef / .lib / .v</text>
+
+  <!-- alu_macro box -->
+  <rect class="macro-frame" x="495" y="290" width="220" height="200" rx="6"/>
+  <text class="macro-label" x="605" y="315">u_alu</text>
+  <text class="sub"  x="515" y="340">macro = alu_macro (4-bit, 8 ops)</text>
+  <text class="kv"   x="515" y="358">a, b, op -> result, zero, carry</text>
+  <text class="kv"   x="515" y="374">registered wrapper on alu.sv</text>
+  <text class="sub"  x="515" y="400">standalone Classic flow:</text>
+  <text class="kv"   x="515" y="416">librelane alu_macro.yaml</text>
+  <text class="sub"  x="515" y="442">outputs for integration:</text>
+  <text class="kv"   x="515" y="458">alu_macro.gds / .lef / .lib / .v</text>
+
+  <!-- data flow from counter to ALU -->
+  <path class="dataflow" d="M405,390 L495,390"/>
+  <text class="flow-note" x="450" y="380" text-anchor="middle">q[3:0] -> a</text>
+  <text class="flow-note" x="450" y="406" text-anchor="middle">q[7:4] -> b</text>
+  <text class="flow-note" x="450" y="422" text-anchor="middle">q[7:5] -> op</text>
+
+  <!-- bidir mapping note (below core frame) -->
+  <rect x="150" y="495" width="600" height="50" fill="#fafafa" stroke="#ccc" stroke-width="1" rx="4"/>
+  <text class="sub" x="160" y="512">bidir_out[7:0]  = counter state</text>
+  <text class="sub" x="330" y="512">[11:8] = alu_result</text>
+  <text class="sub" x="480" y="512">[13:12] = carry, zero</text>
+  <text class="sub" x="610" y="512">[16:14] = op</text>
+  <text class="sub" x="160" y="530">[19:17] = 0 (reserved)</text>
+  <text class="sub" x="330" y="530" fill="#888" font-style="italic">chip_core_multi.sv assignment</text>
+
+  <!-- footer -->
+  <text class="sub" x="450" y="620" text-anchor="middle" fill="#777">
+    chipathon-gf180mcu-librelane-examples - diagrams/multi_macro_hierarchy.svg
+  </text>
+</svg>
