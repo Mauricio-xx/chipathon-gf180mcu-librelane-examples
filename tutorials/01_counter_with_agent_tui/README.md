@@ -82,7 +82,7 @@ The 704-cell count looks high for a 4-bit counter (4 flops + a couple of muxes w
 - `gf180` container running (from `scripts/bootstrap_container.sh`).
 - `eda-agents` pip-installed in an active venv: `pip install -e <eda-agents path>` (with `[adk]` if you also want T02 / T03).
 - Either Claude Code (`npm install -g @anthropic-ai/claude-code`) **or** opencode (`npm install -g opencode-ai`) on PATH.
-- `eda-init` run from the repo root, which writes `.mcp.json` + `.opencode.json` + `.claude/agents/gf180-docker-digital.md`.
+- `eda-init` run from the repo root, which writes `.mcp.json` + `opencode.json` + `.claude/agents/gf180-docker-digital.md` + `.opencode/agent/gf180-docker-digital.md`.
 
 ## What can go wrong
 

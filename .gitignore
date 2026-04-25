@@ -34,5 +34,6 @@ tutorials/**/digital_autoresearch_results/
 
 # Claude Code / opencode local registration (created by eda-init)
 .mcp.json
-.opencode.json
+opencode.json
 .claude/
+.opencode/

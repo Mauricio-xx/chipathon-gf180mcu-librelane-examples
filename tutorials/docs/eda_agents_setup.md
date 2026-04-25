@@ -77,14 +77,15 @@ The `eda-agents` package ships an `eda-init` script that does this for you:
 
 ```bash
 cd /path/to/chipathon-gf180mcu-librelane-examples
-eda-init                              # writes .mcp.json + .opencode.json + .claude/agents/
+eda-init                              # writes .mcp.json + opencode.json + .claude/agents/ + .opencode/agent/
 ```
 
-This creates **three** files at the repo root:
+This creates the following at the repo root (all gitignored):
 
-- `.mcp.json` — Claude Code MCP server registration (already in `.gitignore`)
-- `.opencode.json` — opencode MCP server registration
+- `.mcp.json` — Claude Code MCP server registration
+- `opencode.json` — opencode MCP server registration (note: no leading dot)
 - `.claude/agents/gf180-docker-digital.md` — the agent definition Claude Code will load
+- `.opencode/agent/gf180-docker-digital.md` — same agent for opencode
 
 Verify the MCP server is reachable:
 
@@ -122,7 +123,7 @@ python -c "from eda_agents.core.designs.generic import GenericDesign; print('ok'
 claude --version || opencode --version
 
 # 4. MCP server registered?
-ls .mcp.json .opencode.json
+ls .mcp.json opencode.json
 ```
 
 If all four checks pass, open [`tutorials/01_counter_with_agent_tui/`](../01_counter_with_agent_tui/) and start.
