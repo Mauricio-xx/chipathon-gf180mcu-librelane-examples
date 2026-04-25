@@ -76,30 +76,30 @@
   <text class="sub"  x="205" y="400">standalone Classic flow:</text>
   <text class="kv"   x="205" y="416">librelane counter_macro.yaml</text>
   <text class="sub"  x="205" y="442">outputs for integration:</text>
-  <text class="kv"   x="205" y="458">counter.gds / .lef / .lib / .v</text>
+  <text class="kv"   x="205" y="458">counter.gds / .lef / .lib / .nl.v</text>
 
   <!-- alu_macro box -->
   <rect class="macro-frame" x="495" y="290" width="220" height="200" rx="6"/>
   <text class="macro-label" x="605" y="315">u_alu</text>
   <text class="sub"  x="515" y="340">macro = alu_macro (4-bit, 8 ops)</text>
-  <text class="kv"   x="515" y="358">a, b, op -> result, zero, carry</text>
-  <text class="kv"   x="515" y="374">registered wrapper on alu.sv</text>
+  <text class="kv"   x="515" y="358">a_in, b_in, op_in</text>
+  <text class="kv"   x="515" y="374">-> result_out, zero_out, carry_out</text>
   <text class="sub"  x="515" y="400">standalone Classic flow:</text>
   <text class="kv"   x="515" y="416">librelane alu_macro.yaml</text>
   <text class="sub"  x="515" y="442">outputs for integration:</text>
-  <text class="kv"   x="515" y="458">alu_macro.gds / .lef / .lib / .v</text>
+  <text class="kv"   x="515" y="458">alu_macro.gds / .lef / .lib / .nl.v</text>
 
   <!-- data flow from counter to ALU. The bus mapping moves to the
        bottom band so the arrow stays visually clean. -->
   <path class="dataflow" d="M405,390 L495,390"/>
   <text class="flow-note" x="450" y="383" text-anchor="middle" font-size="10">q[7:0]</text>
 
-  <!-- bus + bidir mapping note (below core frame) -->
-  <rect x="150" y="495" width="600" height="62" fill="#fafafa" stroke="#ccc" stroke-width="1" rx="4"/>
+  <!-- bus + bidir mapping + integration note (below core frame) -->
+  <rect x="150" y="495" width="600" height="92" fill="#fafafa" stroke="#ccc" stroke-width="1" rx="4"/>
   <text class="sub" x="160" y="510" font-weight="bold">counter -&gt; alu_macro:</text>
-  <text class="sub" x="320" y="510">q[3:0] -&gt; a</text>
-  <text class="sub" x="430" y="510">q[7:4] -&gt; b</text>
-  <text class="sub" x="540" y="510">q[7:5] -&gt; op</text>
+  <text class="sub" x="320" y="510">q[3:0] -&gt; a_in</text>
+  <text class="sub" x="430" y="510">q[7:4] -&gt; b_in</text>
+  <text class="sub" x="540" y="510">q[7:5] -&gt; op_in</text>
   <text class="sub" x="160" y="528" font-weight="bold">bidir_out[19:0]:</text>
   <text class="sub" x="320" y="528">[7:0]   = counter</text>
   <text class="sub" x="430" y="528">[11:8]  = result</text>
@@ -107,6 +107,11 @@
   <text class="sub" x="320" y="546">[16:14] = op</text>
   <text class="sub" x="430" y="546">[19:17] = 0 (reserved)</text>
   <text class="sub" x="540" y="546" fill="#888" font-style="italic">chip_core_multi.sv</text>
+  <line x1="160" y1="556" x2="740" y2="556" stroke="#ccc" stroke-width="1"/>
+  <text class="sub" x="160" y="572" font-weight="bold">Integration via MACROS: in chip_top_multi_patch.yaml</text>
+  <text class="sub" x="160" y="582" font-style="italic" fill="#666">
+    pulls each macro's .nl.v (logical netlist) + .lef (abstract) + .lib x9 corners + .gds (layout)
+  </text>
 
   <!-- footer -->
   <text class="sub" x="450" y="620" text-anchor="middle" fill="#777">

@@ -17,7 +17,7 @@
     .label      { font-size:13px; fill:#111; font-weight:bold; }
     .kv         { font-size:12px; fill:#111; font-family:monospace; }
     .sub        { font-size:12px; fill:#444; }
-    .bind       { fill:none; stroke:#b00; stroke-width:2.5; stroke-dasharray:6,4; }
+    .bind       { fill:none; stroke:#b00; stroke-width:2.5; stroke-dasharray:6,4; marker-start:url(#arrowhead-red-l); marker-end:url(#arrowhead-red-r); }
     .bind-label { font-size:14px; fill:#b00; font-weight:bold; }
     .arrow      { fill:none; stroke:#555; stroke-width:1.8; marker-end:url(#arrowhead); }
     .exec-label { font-size:14px; fill:#444; font-weight:bold; }
@@ -27,6 +27,12 @@
   <defs>
     <marker id="arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
       <path d="M0,0 L0,10 L9,5 z" fill="#555"/>
+    </marker>
+    <marker id="arrowhead-red-r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M0,0 L0,10 L9,5 z" fill="#b00"/>
+    </marker>
+    <marker id="arrowhead-red-l" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M9,0 L9,10 L1,5 z" fill="#b00"/>
     </marker>
   </defs>
 
@@ -68,27 +74,31 @@
   <text class="sub"   x="575" y="203">same five subdirs as the host (left column).</text>
   <text class="sub"   x="575" y="221">Container reads/writes them as if local.</text>
 
-  <text class="label" x="555" y="235">Built-in PDK trees:</text>
-  <text class="kv"    x="555" y="253">/foss/pdks/gf180mcuD/</text>
-  <text class="sub"   x="575" y="271">stdcell libs, LEF, Liberty, SPICE, DRC decks.</text>
-  <text class="kv"    x="555" y="289">/foss/pdks/ihp-sg13g2/</text>
-  <text class="sub"   x="575" y="307">(default; we switch to gf180 with sak-pdk-script.sh).</text>
+  <text class="label" x="555" y="245">PDK tree (used by every notebook):</text>
+  <text class="kv"    x="555" y="263">/foss/pdks/gf180mcuD/</text>
+  <text class="sub"   x="575" y="281">stdcell libs, LEF, Liberty, SPICE, DRC decks.</text>
+  <text class="sub"   x="575" y="299" font-style="italic">(image also ships ihp-sg13g2 trees; not used by these examples.)</text>
 
-  <text class="label" x="555" y="340">EDA tools bundled in image:</text>
-  <text class="sub"   x="575" y="358">Yosys, OpenROAD, Magic, KLayout, Netgen, Icarus,</text>
-  <text class="sub"   x="575" y="376">cocotb, Verilator, LibreLane, ciel, sak-pdk-script.sh.</text>
+  <text class="label" x="555" y="335">EDA tools bundled in image:</text>
+  <text class="sub"   x="575" y="353">Yosys, OpenROAD, Magic, KLayout, Netgen, Icarus,</text>
+  <text class="sub"   x="575" y="371">cocotb, Verilator, LibreLane, ciel.</text>
 
-  <text class="label" x="555" y="410">Long-running idle entrypoint:</text>
-  <text class="kv"    x="575" y="428">sleep infinity</text>
-  <text class="sub"   x="575" y="446">so the notebooks can `docker exec` into it many times.</text>
+  <text class="label" x="555" y="405">Long-running idle entrypoint:</text>
+  <text class="kv"    x="575" y="423">--skip sleep infinity</text>
+  <text class="sub"   x="575" y="441">--skip is the iic-osic-tools image flag that bypasses</text>
+  <text class="sub"   x="575" y="457">its desktop/VNC entry; sleep infinity then keeps the</text>
+  <text class="sub"   x="575" y="473">container alive for repeated `docker exec`.</text>
 
   <!-- Two arrows in the gap. Long captions live in the bottom band
        so they never overflow into the host/container content. -->
   <path class="arrow" d="M 460 150 L 540 150"/>
   <text class="exec-label" x="500" y="142" text-anchor="middle">docker exec</text>
 
-  <path class="bind" d="M 460 290 L 540 290"/>
+  <!-- bind-mount is bidirectional: container writes survive on the
+       host, host edits show up in the container. -->
+  <path class="bind" d="M 465 290 L 535 290"/>
   <text class="bind-label" x="500" y="282" text-anchor="middle">bind-mount</text>
+  <text class="sub"        x="500" y="307" text-anchor="middle" font-style="italic">same physical files</text>
 
   <!-- bottom band -->
   <rect x="40" y="500" width="920" height="46" fill="#fafafa" stroke="#ccc" stroke-width="1" rx="4"/>
@@ -100,5 +110,5 @@
     One-time bootstrap: <tspan font-family="monospace">scripts/bootstrap_container.sh</tspan> pulls the image and starts `gf180` with the mount in place.
   </text>
 
-  <text class="footer" x="500" y="558">chipathon-gf180mcu-librelane-examples - diagrams/container_model.svg</text>
+  <text class="footer" x="500" y="558">chipathon-gf180mcu-librelane-examples — diagrams/container_model.svg</text>
 </svg>

@@ -26,8 +26,8 @@
   </defs>
 
   <!-- header -->
-  <text class="title"    x="500" y="30">Anatomy of a slot</text>
-  <text class="subtitle" x="500" y="52">The three files that, together, define one wafer-space slot. Write the triple -> you have a new slot.</text>
+  <text class="title"    x="500" y="30">Anatomy of the slot triple</text>
+  <text class="subtitle" x="500" y="52">Three files that, together, define one wafer-space slot. Write the triple -&gt; you have a new slot.</text>
 
   <!-- File 1: slot_defines.svh -->
   <rect class="file-frame" x="30" y="90" width="300" height="390" rx="6"/>
@@ -57,8 +57,8 @@
   <text class="code"       x="370" y="230">VERILOG_DEFINES: [SLOT_WORKSHOP]</text>
   <text class="code"       x="370" y="260">PAD_SOUTH: [</text>
   <text class="code"       x="370" y="278">  clk_pad, rst_n_pad,</text>
-  <text class="code"       x="370" y="296">  "inputs\[0\].pad",</text>
-  <text class="code"       x="370" y="314">  "analog\[28\].pad", ... ]</text>
+  <text class="code"       x="370" y="296">  "inputs[0].pad",</text>
+  <text class="code"       x="370" y="314">  "analog[28].pad", ... ]</text>
   <text class="code"       x="370" y="342">PAD_EAST:  [ ... ]</text>
   <text class="code"       x="370" y="360">PAD_NORTH: [ ... ]</text>
   <text class="code"       x="370" y="378">PAD_WEST:  [ ... ]</text>

@@ -68,7 +68,7 @@ host paths so it never corrupts the baseline shared with notebook 03:
 All fork clones are idempotent: if the path already exists the step
 is a no-op.
 
-![slot anatomy](diagrams/slot_anatomy.svg)
+![the three files that define a slot](diagrams/slot_anatomy.svg)
 
 ## Repository layout
 
