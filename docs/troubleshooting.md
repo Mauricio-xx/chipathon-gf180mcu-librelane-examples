@@ -64,6 +64,42 @@ image's Icarus is pinned; if a future update changes invocation
 conventions, pin the image to a dated tag (e.g.
 `hpretl/iic-osic-tools:2026.04.13`) in `scripts/bootstrap_container.sh`.
 
+**`VPI: Couldn't find root handle <module>`** when switching from
+`test-counter` to `test-alu`. Both targets wrote their vvp into the
+same `sim_build/` and the second target finds the first target's
+toplevel. The Makefile now uses per-target `SIM_BUILD=sim_build_X`;
+if you still see this, run `make clean` first.
+
+## Cocotb gate-level (example 04 Step 5b)
+
+**`Bad 'period': Unable to accurately represent 10(ns) with the
+simulator precision of 1e0`**. iverilog fell back to 1s/1s precision
+because no `` `timescale `` directive was found. The fix is
+`tb/timescale.v`, a one-line `` `timescale 1ns/1ps ``, which the
+Makefile compiles first.
+
+**GL TB sees pre-edge values after `await RisingEdge(clk)`**. Sample
+registered outputs after an extra `await Timer(1, units="ns")` --
+otherwise iverilog returns the value of the register just before the
+posedge. `test_alu_macro.py` does this at every iteration.
+
+## LibreLane chip-top config (example 04 Step 6)
+
+**`'MACROS.counter.lib.*[0]' invalid: '.../counter.lib' does not
+exist`**. The `--save-views-to` directory holds `lib/<corner>/<name>__
+<corner>.lib`, not a single `<name>.lib`. Build a full 9-entry
+`{corner: [path]}` map (see `librelane/chip_top_multi_patch.yaml`).
+
+**`Refusing to automatically convert value at
+'PDN_MACRO_CONNECTIONS[0]' to a string`**. `PDN_MACRO_CONNECTIONS` is
+`List[str]` in LibreLane v3.0.2 -- each entry is `"<regex> <vdd>
+<vss> <vdd_pin> <vss_pin>"`, not a dict.
+
+**Verilator lint `Parameter not found: 'WIDTH'`** on the chip-flow's
+synth step. The hardened `<macro>.nl.v` is a parameterless
+synthesised netlist; instances in `chip_core.sv` must not override
+parameters. Drop `#(.WIDTH(8))` on the instantiation.
+
 ## LibreLane flow stuck
 
 **Stuck on Magic DRC for > 20 min**. Magic DRC is O(polygon count)

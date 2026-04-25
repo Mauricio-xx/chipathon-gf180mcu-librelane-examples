@@ -5,6 +5,10 @@ then stitched into the chipathon-2026 workshop padring.
 
 ![multi-macro hierarchy](../../diagrams/multi_macro_hierarchy.svg)
 
+Verification chain the notebook walks end to end:
+
+![multi-macro verification](../../diagrams/multi_macro_verification.svg)
+
 ## Files
 
 ```
@@ -70,7 +74,11 @@ exercises; the wrapped version is what gets hardened and instantiated
 in `chip_core_multi.sv`.
 
 **chip_core_multi.sv** -- drop-in replacement for the fork's
-`src/chip_core.sv`. Wires:
+`src/chip_core.sv`. Instantiates both macros WITHOUT parameter
+overrides: the hardened `.nl.v` netlists carry no parameters (yosys
+bakes them in during synthesis), so keeping `#(.WIDTH(...))` on the
+instance here triggers a Verilator lint error *Parameter not found:
+'WIDTH'* during the Chip-flow lint stage. Wires:
 
 ```
 counter.en      = input_in[0]            (spare input pad)
@@ -100,14 +108,15 @@ jupyter lab 04_counter_alu_multimacro.ipynb
 ```
 
 Flip the `RUN_*` flags in Step 0, then run cells top to bottom.
-Runtime budget:
+Runtime budget (measured on a modern 32-core workstation, 2026-04-25):
 
-| Step | Runtime |
-|------|---------|
-| cocotb (counter + alu) | ~15 s |
-| harden counter macro | ~3-5 min |
-| harden alu_macro | ~3-5 min |
-| chip-top flow (SLOT=workshop) | ~35-45 min |
+| Step                           | Runtime    | What runs |
+|--------------------------------|------------|-----------|
+| cocotb RTL sim                 | ~15 s      | counter + alu tests |
+| harden counter macro           | ~1.5 min   | Classic flow, signoff clean |
+| harden alu_macro               | ~1.5 min   | Classic flow, signoff clean |
+| cocotb GL sim                  | ~15 s      | counter.nl.v + alu_macro.nl.v + gf180 cells |
+| chip-top flow (SLOT=workshop)  | ~60-90 min | Chip flow + Magic DRC + Netgen LVS |
 
 ## Prerequisites
 

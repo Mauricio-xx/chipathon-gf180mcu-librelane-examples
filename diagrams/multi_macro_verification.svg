@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1260 620" font-family="Helvetica,Arial,sans-serif">
+  <title>Multi-macro verification chain for example 04</title>
+  <desc>
+    Verification pipeline for the counter + ALU multi-macro example.
+    Two per-macro tracks (RTL sim -> synth -> GL sim -> hardening
+    signoff) merge into chip-top integration + full chip signoff.
+  </desc>
+
+  <style>
+    .rtl-box     { fill:#e6f2ff; stroke:#003b73; stroke-width:1.5; }
+    .sim-box     { fill:#fff3e0; stroke:#b26500; stroke-width:1.5; }
+    .synth-box   { fill:#eaf6e6; stroke:#4a7c3a; stroke-width:1.5; }
+    .signoff-box { fill:#f7e0e0; stroke:#8b0000; stroke-width:1.5; }
+    .integ-box   { fill:#e9defa; stroke:#4b2a91; stroke-width:1.5; }
+    .label       { font-size:14px; fill:#111; text-anchor:middle; }
+    .sublabel    { font-size:11px; fill:#444; text-anchor:middle; }
+    .tool        { font-size:10px; fill:#666; text-anchor:middle; font-style:italic; }
+    .title       { font-size:20px; fill:#111; text-anchor:middle; font-weight:bold; }
+    .caption     { font-size:12px; fill:#333; text-anchor:middle; font-style:italic; }
+    .arrow       { fill:none; stroke:#555; stroke-width:2; marker-end:url(#arrow); }
+    .arrow-soft  { fill:none; stroke:#999; stroke-width:1.5; stroke-dasharray:5,3; marker-end:url(#arrow); }
+    .track-label { font-size:13px; fill:#111; font-weight:bold; text-anchor:start; }
+  </style>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L0,10 L9,5 z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <text class="title" x="630" y="32">Verification chain -- example 04 (counter + ALU multi-macro)</text>
+  <text class="caption" x="630" y="54">Every box maps to one step in the notebook. Dashed arrows are cross-checks.</text>
+
+  <!-- track labels (counter / alu) -->
+  <text class="track-label" x="30" y="110">counter</text>
+  <text class="track-label" x="30" y="290">alu_macro</text>
+  <text class="track-label" x="30" y="470">chip-top integration</text>
+
+  <!-- counter track boxes -->
+  <rect class="rtl-box" x="130" y="80"  width="110" height="70" rx="6"/>
+  <text class="label"    x="185" y="108">counter.sv</text>
+  <text class="sublabel" x="185" y="128">8-bit register</text>
+  <text class="tool"     x="185" y="143">4 ports</text>
+
+  <rect class="sim-box" x="290" y="80"  width="130" height="70" rx="6"/>
+  <text class="label"    x="355" y="108">RTL sim</text>
+  <text class="sublabel" x="355" y="128">test_counter.py</text>
+  <text class="tool"     x="355" y="143">cocotb + iverilog</text>
+
+  <rect class="synth-box" x="470" y="80"  width="150" height="70" rx="6"/>
+  <text class="label"    x="545" y="108">Synthesis</text>
+  <text class="sublabel" x="545" y="128">counter.nl.v</text>
+  <text class="tool"     x="545" y="143">yosys (Classic)</text>
+
+  <rect class="sim-box" x="670" y="80"  width="130" height="70" rx="6"/>
+  <text class="label"    x="735" y="108">GL sim</text>
+  <text class="sublabel" x="735" y="128">gf180 stdcells</text>
+  <text class="tool"     x="735" y="143">iverilog + cocotb</text>
+
+  <rect class="signoff-box" x="850" y="80" width="170" height="70" rx="6"/>
+  <text class="label"    x="935" y="104">Harden (Classic)</text>
+  <text class="sublabel" x="935" y="123">DRC | LVS | STA 3x corners</text>
+  <text class="tool"     x="935" y="140">Magic + KLayout + Netgen</text>
+
+  <rect class="integ-box" x="1070" y="80" width="170" height="70" rx="6"/>
+  <text class="label"    x="1155" y="108">counter macro</text>
+  <text class="sublabel" x="1155" y="128">.gds / .lef / .lib</text>
+  <text class="tool"     x="1155" y="143">--save-views-to</text>
+
+  <!-- counter arrows -->
+  <path class="arrow"      d="M240,115 L290,115"/>
+  <path class="arrow"      d="M420,115 L470,115"/>
+  <path class="arrow"      d="M620,115 L670,115"/>
+  <path class="arrow"      d="M800,115 L850,115"/>
+  <path class="arrow"      d="M1020,115 L1070,115"/>
+  <!-- cross-check: RTL result ~= GL result -->
+  <path class="arrow-soft" d="M355,150 C355,190 735,190 735,150"/>
+  <text class="tool" x="545" y="183">equivalence check: RTL vs GL</text>
+
+  <!-- alu_macro track boxes -->
+  <rect class="rtl-box" x="130" y="260"  width="110" height="70" rx="6"/>
+  <text class="label"    x="185" y="288">alu_macro.sv</text>
+  <text class="sublabel" x="185" y="308">wraps alu.sv</text>
+  <text class="tool"     x="185" y="323">2-stage pipeline</text>
+
+  <rect class="sim-box" x="290" y="260"  width="130" height="70" rx="6"/>
+  <text class="label"    x="355" y="288">RTL sim</text>
+  <text class="sublabel" x="355" y="308">test_alu.py (comb)</text>
+  <text class="tool"     x="355" y="323">+ test_alu_macro.py</text>
+
+  <rect class="synth-box" x="470" y="260"  width="150" height="70" rx="6"/>
+  <text class="label"    x="545" y="288">Synthesis</text>
+  <text class="sublabel" x="545" y="308">alu_macro.nl.v</text>
+  <text class="tool"     x="545" y="323">yosys (Classic)</text>
+
+  <rect class="sim-box" x="670" y="260"  width="130" height="70" rx="6"/>
+  <text class="label"    x="735" y="288">GL sim</text>
+  <text class="sublabel" x="735" y="308">gf180 stdcells</text>
+  <text class="tool"     x="735" y="323">iverilog + cocotb</text>
+
+  <rect class="signoff-box" x="850" y="260" width="170" height="70" rx="6"/>
+  <text class="label"    x="935" y="284">Harden (Classic)</text>
+  <text class="sublabel" x="935" y="303">DRC | LVS | STA 3x corners</text>
+  <text class="tool"     x="935" y="320">Magic + KLayout + Netgen</text>
+
+  <rect class="integ-box" x="1070" y="260" width="170" height="70" rx="6"/>
+  <text class="label"    x="1155" y="288">alu_macro</text>
+  <text class="sublabel" x="1155" y="308">.gds / .lef / .lib</text>
+  <text class="tool"     x="1155" y="323">--save-views-to</text>
+
+  <!-- alu arrows -->
+  <path class="arrow"      d="M240,295 L290,295"/>
+  <path class="arrow"      d="M420,295 L470,295"/>
+  <path class="arrow"      d="M620,295 L670,295"/>
+  <path class="arrow"      d="M800,295 L850,295"/>
+  <path class="arrow"      d="M1020,295 L1070,295"/>
+  <path class="arrow-soft" d="M355,330 C355,370 735,370 735,330"/>
+  <text class="tool" x="545" y="363">equivalence check: RTL vs GL</text>
+
+  <!-- merge into chip-top -->
+  <path class="arrow" d="M1155,150 L1155,260"/>
+
+  <!-- chip-top band -->
+  <rect class="rtl-box" x="130" y="440" width="130" height="70" rx="6"/>
+  <text class="label"    x="195" y="468">chip_core_multi.sv</text>
+  <text class="sublabel" x="195" y="488">instantiates both</text>
+  <text class="tool"     x="195" y="503">macros (not RTL)</text>
+
+  <rect class="synth-box" x="300" y="440" width="170" height="70" rx="6"/>
+  <text class="label"    x="385" y="468">Chip-flow synth</text>
+  <text class="sublabel" x="385" y="488">macros = blackbox</text>
+  <text class="tool"     x="385" y="503">via vh: of each macro</text>
+
+  <rect class="integ-box" x="510" y="440" width="170" height="70" rx="6"/>
+  <text class="label"    x="595" y="468">Padring placement</text>
+  <text class="sublabel" x="595" y="488">counter + alu + logo</text>
+  <text class="tool"     x="595" y="503">OpenROAD FP/PnR</text>
+
+  <rect class="signoff-box" x="720" y="440" width="190" height="70" rx="6"/>
+  <text class="label"    x="815" y="464">Chip signoff</text>
+  <text class="sublabel" x="815" y="483">DRC | LVS | STA | antenna</text>
+  <text class="tool"     x="815" y="500">Magic + KLayout + Netgen</text>
+
+  <rect class="integ-box" x="950" y="440" width="180" height="70" rx="6"/>
+  <text class="label"    x="1040" y="468">chip_top.gds</text>
+  <text class="sublabel" x="1040" y="488">2935 x 2935 um</text>
+  <text class="tool"     x="1040" y="503">tape-out ready</text>
+
+  <!-- chip-top arrows -->
+  <path class="arrow" d="M260,475 L300,475"/>
+  <path class="arrow" d="M470,475 L510,475"/>
+  <path class="arrow" d="M680,475 L720,475"/>
+  <path class="arrow" d="M910,475 L950,475"/>
+  <!-- macros feed into chip synth -->
+  <path class="arrow" d="M1155,330 C1155,390 385,390 385,440"/>
+  <text class="tool" x="770" y="415">.gds/.lef/.lib/.vh of both macros</text>
+
+  <!-- legend -->
+  <g transform="translate(30,545)">
+    <rect class="rtl-box"     x="0"   y="0" width="16" height="12"/>
+    <text class="sublabel"     x="24"  y="10" text-anchor="start">RTL / source</text>
+    <rect class="sim-box"     x="130" y="0" width="16" height="12"/>
+    <text class="sublabel"     x="154" y="10" text-anchor="start">simulation (functional check)</text>
+    <rect class="synth-box"   x="370" y="0" width="16" height="12"/>
+    <text class="sublabel"     x="394" y="10" text-anchor="start">synthesis (logical netlist)</text>
+    <rect class="signoff-box" x="620" y="0" width="16" height="12"/>
+    <text class="sublabel"     x="644" y="10" text-anchor="start">signoff (DRC / LVS / STA / antenna)</text>
+    <rect class="integ-box"   x="890" y="0" width="16" height="12"/>
+    <text class="sublabel"     x="914" y="10" text-anchor="start">integration artefact</text>
+  </g>
+</svg>

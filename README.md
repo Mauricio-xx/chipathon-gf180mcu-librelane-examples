@@ -29,7 +29,7 @@ the padring fork. See `NOTICE` and `CREDITS.md`.
 | 01 | [`01_rtl2gds_counter.ipynb`](examples/01_rtl2gds_counter.ipynb) | Bare 4-bit counter through the LibreLane **Classic** flow. No padring. Standalone (RTL + config inlined). Your smoke test. | 1-2 min flow |
 | 02 | [`02_rtl2gds_chip_top_custom.ipynb`](examples/02_rtl2gds_chip_top_custom.ipynb) | Full-chip **Chip** flow on the stock `slot_1x1`, with the counter from #01 hardened as a macro replacing an SRAM. Teaches the hierarchical macro path against the **upstream** template. | 35-45 min |
 | 03 | [`03_rtl2gds_chipathon_use.ipynb`](examples/03_rtl2gds_chipathon_use.ipynb) | Clone the padring fork and run *your own* `chip_core.sv` through `SLOT=workshop`. **The notebook you mostly live in during the chipathon.** | 35-45 min |
-| 04 | [`04_counter_alu_multimacro/`](examples/04_counter_alu_multimacro/) | Two macros (8-bit counter + 4-bit ALU) hardened independently, then stitched into the workshop slot. Touches `MACROS:`, `PDN_MACRO_CONNECTIONS:`, and manual floorplan placement. | ~45 min + ~10 min cocotb/hardening |
+| 04 | [`04_counter_alu_multimacro/`](examples/04_counter_alu_multimacro/) | Two macros (8-bit counter + 4-bit ALU) hardened independently + **post-synth GL sim** + stitched into the workshop slot. Touches `MACROS:`, `PDN_MACRO_CONNECTIONS:`, and manual floorplan placement. Validated end-to-end 2026-04-25. | ~60-90 min chip-top + ~5 min macros + cocotb |
 
 ## Prerequisites
 
@@ -54,9 +54,12 @@ the fork:
 - https://github.com/Mauricio-xx/chipathon-2026-gf180mcu-padring
   (derivation of wafer-space/gf180mcu-project-template + JuanMoya pad layout)
 
-Notebooks 00, 03, 04 clone the fork on demand under
-`~/eda/designs/chipathon_padring/template/`. If you already have it
-cloned they skip the clone step.
+Notebooks 00, 03 clone the fork on demand under
+`~/eda/designs/chipathon_padring/template/`. Notebook 04 clones a
+**dedicated** copy at `~/eda/designs/multimacro_chipathon/template/`
+so its `MACROS:` + `PDN_MACRO_CONNECTIONS:` patches never corrupt the
+baseline used by notebook 03. All fork clones are idempotent: if the
+path already exists the step is a no-op.
 
 ![slot anatomy](diagrams/slot_anatomy.svg)
 
@@ -75,6 +78,7 @@ cloned they skip the clone step.
 │   ├── slot_anatomy.svg
 │   ├── workshop_pad_map.svg
 │   ├── multi_macro_hierarchy.svg
+│   ├── multi_macro_verification.svg       # example 04 verification chain
 │   └── container_model.svg
 ├── docs/
 │   ├── container_setup.md                 # bootstrap, troubleshooting
@@ -94,10 +98,12 @@ cloned they skip the clone step.
 │       │   ├── alu_macro.sv
 │       │   └── chip_core_multi.sv
 │       ├── tb/
-│       │   ├── Makefile
+│       │   ├── Makefile                    # RTL + GL sim dispatcher
 │       │   ├── Makefile.cocotb
-│       │   ├── test_counter.py
-│       │   └── test_alu.py
+│       │   ├── timescale.v                 # 1ns/1ps for GL sim
+│       │   ├── test_counter.py             # RTL + GL (same TB)
+│       │   ├── test_alu.py                 # pure-comb ALU RTL
+│       │   └── test_alu_macro.py           # registered wrapper GL
 │       └── librelane/
 │           ├── counter_macro.yaml
 │           ├── alu_macro.yaml

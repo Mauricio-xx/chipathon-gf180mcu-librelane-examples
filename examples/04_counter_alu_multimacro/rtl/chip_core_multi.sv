@@ -61,9 +61,13 @@ module chip_core #(
     assign bidir_pd = '0;
 
     // ---- counter macro ----
+    // Parameter WIDTH is baked into the hardened GDS (WIDTH=8), so we
+    // do NOT override it on the instance. After synthesis, yosys emits
+    // a parameterless module in counter.nl.v; passing #(.WIDTH(...))
+    // here would produce a lint error "Parameter not found: 'WIDTH'".
     wire [7:0] count_q;
 
-    counter #(.WIDTH(8)) u_counter (
+    counter u_counter (
         .clk   (clk),
         .rst_n (rst_n),
         .en    (input_in[0]),
@@ -74,12 +78,13 @@ module chip_core #(
     // The wrapped version is the one hardened standalone. Its 2-stage
     // pipeline adds one clock of latency relative to the counter; the
     // output observed on bidir pads therefore tracks the counter by one
-    // cycle. See examples/04_counter_alu_multimacro/README.md.
+    // cycle. Parameter WIDTH=4 is baked into the hardened macro (see
+    // comment above on counter for why we drop the override here).
     wire [3:0] alu_result;
     wire       alu_zero;
     wire       alu_carry;
 
-    alu_macro #(.WIDTH(4)) u_alu (
+    alu_macro u_alu (
         .clk        (clk),
         .rst_n      (rst_n),
         .a_in       (count_q[3:0]),

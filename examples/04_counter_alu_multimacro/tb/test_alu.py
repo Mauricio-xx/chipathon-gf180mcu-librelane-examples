@@ -61,7 +61,7 @@ async def test_alu_all_operations(dut):
                 dut.a.value  = a
                 dut.b.value  = b
                 dut.op.value = op
-                await Timer(1, units="ns")
+                await Timer(1, unit="ns")
 
                 got_res   = int(dut.result.value)
                 got_zero  = int(dut.zero.value)
