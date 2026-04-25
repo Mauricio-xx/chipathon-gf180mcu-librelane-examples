@@ -1,126 +1,138 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560" font-family="Helvetica,Arial,sans-serif">
-  <title>Tutorial 01 - Drive the chipathon flow with the gf180-docker-digital agent (Claude Code / opencode TUI)</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 620" font-family="Helvetica,Arial,sans-serif">
+  <title>Tutorial 01 - TUI agent driving LibreLane via Claude Code / opencode on the gf180 container</title>
   <desc>
-    The student opens a terminal, runs `claude --agent gf180-docker-digital` (or opencode equivalent),
-    and chats with the agent. The agent loads the flow.rtl2gds_gf180_docker skill via the eda-agents
-    MCP server and then drives the gf180 container via `docker exec`. The same `~/eda/designs/`
-    bind-mount that the chipathon examples use is reused so artifacts land at predictable paths.
+    The student opens a shell and runs `claude --agent gf180-docker-digital` (or the opencode
+    equivalent). The agent runtime asks the eda-agents MCP server (a separate Python service,
+    called once per session) for the flow.rtl2gds_gf180_docker skill, which returns the image
+    tag, mount paths, and librelane invocation. The agent then drives `docker exec` into the
+    gf180 container. The host workspace ~/eda/designs is bind-mounted to /foss/designs in the
+    container; the mount is set up once by scripts/bootstrap_container.sh, so artifacts written
+    by LibreLane survive `docker rm gf180` and can be inspected from the host shell.
   </desc>
 
   <style>
-    .title      { font-size:22px; fill:#111; text-anchor:middle; font-weight:bold; }
-    .subtitle   { font-size:14px; fill:#444; text-anchor:middle; font-style:italic; }
-    .student    { fill:#fff7e6; stroke:#a05a00; stroke-width:2; }
-    .cli        { fill:#eef6ff; stroke:#003b73; stroke-width:2; }
-    .mcp        { fill:#f4ecff; stroke:#5a2da8; stroke-width:2; }
-    .container  { fill:#eefdef; stroke:#156b2e; stroke-width:2; }
-    .label-big  { font-size:17px; fill:#111; font-weight:bold; }
-    .label      { font-size:13px; fill:#111; font-weight:bold; }
-    .kv         { font-size:12px; fill:#111; font-family:monospace; }
-    .sub        { font-size:12px; fill:#444; }
-    .arrow      { fill:none; stroke:#555; stroke-width:1.8; marker-end:url(#arrowhead); }
-    .skill      { fill:none; stroke:#5a2da8; stroke-width:1.8; stroke-dasharray:6,4; marker-end:url(#arrowhead-purple); }
-    .bind       { fill:none; stroke:#b00; stroke-width:2.5; stroke-dasharray:6,4; }
-    .arrow-label { font-size:13px; fill:#444; font-weight:bold; text-anchor:middle; }
-    .footer     { font-size:11px; fill:#777; text-anchor:middle; }
+    .title       { font-size:22px; fill:#111; text-anchor:middle; font-weight:bold; }
+    .subtitle    { font-size:13px; fill:#444; text-anchor:middle; font-style:italic; }
+    .label-big   { font-size:17px; fill:#111; font-weight:bold; }
+    .label       { font-size:13px; fill:#111; font-weight:bold; }
+    .kv          { font-size:12px; fill:#111; font-family:'Courier New',Courier,monospace; }
+    .sub         { font-size:12px; fill:#444; }
+
+    .student     { fill:#fff7e6; stroke:#a05a00; stroke-width:2; }
+    .agent       { fill:#eef6ff; stroke:#003b73; stroke-width:2; }
+    .mcp         { fill:#f4ecff; stroke:#5a2da8; stroke-width:2; }
+    .container   { fill:#eefdef; stroke:#156b2e; stroke-width:2; }
+    .mount       { fill:#fafafa; stroke:#888; stroke-width:1.5; }
+
+    .arrow       { fill:none; stroke:#444; stroke-width:2; marker-end:url(#arrowhead); }
+    .skill       { fill:none; stroke:#5a2da8; stroke-width:2; stroke-dasharray:6,4; marker-end:url(#arrowhead-purple); }
+    .biarrow     { fill:none; stroke:#b00; stroke-width:2.5; stroke-dasharray:5,4; marker-start:url(#arrowhead-red-l); marker-end:url(#arrowhead-red-r); }
+
+    .arrow-label    { font-size:13px; fill:#222; font-weight:bold; text-anchor:middle; }
+    .skill-label    { font-size:13px; fill:#5a2da8; font-weight:bold; }
+    .footer         { font-size:11px; fill:#777; text-anchor:middle; }
+    .divider        { stroke:#bbb; stroke-width:1; }
   </style>
 
   <defs>
-    <marker id="arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-      <path d="M0,0 L0,10 L9,5 z" fill="#555"/>
+    <marker id="arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L0,10 L9,5 z" fill="#444"/>
     </marker>
-    <marker id="arrowhead-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+    <marker id="arrowhead-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
       <path d="M0,0 L0,10 L9,5 z" fill="#5a2da8"/>
+    </marker>
+    <marker id="arrowhead-red-r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M0,0 L0,10 L9,5 z" fill="#b00"/>
+    </marker>
+    <marker id="arrowhead-red-l" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M9,0 L9,10 L1,5 z" fill="#b00"/>
     </marker>
   </defs>
 
-  <!-- header -->
-  <text class="title"    x="500" y="30">Tutorial 01 - TUI agent driving LibreLane</text>
-  <text class="subtitle" x="500" y="52">student chats with `gf180-docker-digital`; agent loads skill via MCP, then `docker exec`s into gf180</text>
+  <!-- Header (subtitle dropped to give MCP room without overlap; full prose lives in <desc>) -->
+  <text class="title" x="550" y="32">Tutorial 01 - TUI agent driving LibreLane</text>
 
-  <!-- Student -->
-  <rect class="student" x="30" y="100" width="170" height="160" rx="8"/>
-  <text class="label-big" x="115" y="128" text-anchor="middle">Student</text>
-  <text class="sub"        x="115" y="148" text-anchor="middle">in a terminal</text>
-  <text class="kv"        x="40"  y="180">$ claude --agent</text>
-  <text class="kv"        x="40"  y="196">  gf180-docker-digital</text>
-  <text class="sub"        x="40"  y="218">opening prompt:</text>
-  <text class="sub"        x="40"  y="234">"harden the design</text>
-  <text class="sub"        x="40"  y="250">at /foss/designs/..."</text>
+  <!-- MCP server (above Agent, side-service) -->
+  <rect class="mcp" x="340" y="50" width="320" height="98" rx="8"/>
+  <text class="label-big" x="500" y="74" text-anchor="middle">MCP server (eda-agents)</text>
+  <text class="sub"       x="500" y="92" text-anchor="middle" font-style="italic">external Python service  ·  called once per session</text>
+  <text class="kv"        x="500" y="118" text-anchor="middle">render_skill("flow.rtl2gds_gf180_docker")</text>
+  <text class="sub"       x="500" y="136" text-anchor="middle">returns: image tag + mount paths + librelane cmd</text>
 
-  <!-- CLI agent -->
-  <rect class="cli" x="240" y="100" width="220" height="320" rx="8"/>
-  <text class="label-big" x="350" y="128" text-anchor="middle">Agent runtime</text>
-  <text class="sub"        x="350" y="148" text-anchor="middle">Claude Code OR opencode</text>
+  <!-- vertical dashed arrow Agent -> MCP (skill call, ~30px of length) -->
+  <path class="skill" d="M 500 180 L 500 150"/>
+  <text class="skill-label" x="510" y="170">render_skill()</text>
 
-  <text class="label" x="255" y="180">Loaded agent:</text>
-  <text class="kv"    x="255" y="198">gf180-docker-digital.md</text>
-  <text class="sub"   x="255" y="216">(shipped by eda-agents,</text>
-  <text class="sub"   x="255" y="232">installed by `eda-init`)</text>
+  <!-- Student box -->
+  <rect class="student" x="40" y="180" width="240" height="240" rx="8"/>
+  <text class="label-big" x="160" y="205" text-anchor="middle">Student</text>
+  <text class="sub"       x="160" y="223" text-anchor="middle">in a shell</text>
+  <line class="divider" x1="55" y1="234" x2="265" y2="234"/>
+  <text class="kv"    x="55" y="258">$ claude --agent</text>
+  <text class="kv"    x="55" y="275">    gf180-docker-digital</text>
+  <text class="sub"   x="55" y="294" font-style="italic">(or `opencode` instead of `claude`)</text>
+  <text class="label" x="55" y="324">opening prompt (typed in TUI)</text>
+  <text class="sub"   x="55" y="344">"harden the design at</text>
+  <text class="sub"   x="55" y="360">/foss/designs/</text>
+  <text class="sub"   x="55" y="376">eda_agents_counter_tui/"</text>
+  <text class="sub"   x="55" y="404" font-style="italic">(container path; see band below)</text>
 
-  <text class="label" x="255" y="262">Per-call approval prompts:</text>
-  <text class="sub"   x="255" y="280">- read rtl/counter.v</text>
-  <text class="sub"   x="255" y="296">- run `make test-counter`</text>
-  <text class="sub"   x="255" y="312">- run `make librelane`</text>
-  <text class="sub"   x="255" y="328">- read final/metrics.csv</text>
+  <!-- Agent runtime box -->
+  <rect class="agent" x="340" y="180" width="320" height="240" rx="8"/>
+  <text class="label-big" x="500" y="205" text-anchor="middle">Agent runtime</text>
+  <text class="sub"       x="500" y="223" text-anchor="middle">Claude Code  OR  opencode</text>
+  <line class="divider" x1="355" y1="234" x2="645" y2="234"/>
+  <text class="label" x="355" y="254">Loaded agent</text>
+  <text class="kv"    x="355" y="272">.claude/agents/gf180-docker-digital.md</text>
+  <text class="sub"   x="355" y="288" font-style="italic">(opencode mirror: .opencode/agent/...)</text>
+  <text class="label" x="355" y="314">Per-turn tool calls (example)</text>
+  <text class="sub"   x="371" y="332">- read rtl/counter.v</text>
+  <text class="sub"   x="371" y="348">- run `make test-counter`</text>
+  <text class="sub"   x="371" y="364">- run `make librelane`</text>
+  <text class="label" x="355" y="388">Reports back</text>
+  <text class="sub"   x="371" y="406">signoff metrics + GDS + DRC/LVS/timing</text>
 
-  <text class="label" x="255" y="358">Reports back:</text>
-  <text class="sub"   x="255" y="376">- signoff metrics</text>
-  <text class="sub"   x="255" y="392">- GDS path</text>
-  <text class="sub"   x="255" y="408">- DRC / LVS / timing</text>
+  <!-- Container box -->
+  <rect class="container" x="720" y="180" width="360" height="240" rx="8"/>
+  <text class="label-big" x="900" y="205" text-anchor="middle">gf180 container</text>
+  <text class="sub"       x="900" y="223" text-anchor="middle">hpretl/iic-osic-tools:next</text>
+  <line class="divider" x1="735" y1="234" x2="1065" y2="234"/>
+  <text class="label" x="735" y="254">LibreLane stack (RTL -&gt; GDS)</text>
+  <text class="sub"   x="735" y="272">Yosys -&gt; OpenROAD -&gt; Magic -&gt; KLayout -&gt; Netgen</text>
+  <text class="sub"   x="735" y="288" font-style="italic">(verification: cocotb / iverilog)</text>
+  <text class="label" x="735" y="314">Workspace (bind)</text>
+  <text class="kv"    x="735" y="332">/foss/designs/eda_agents_counter_tui/</text>
+  <text class="label" x="735" y="358">After flow</text>
+  <text class="kv"    x="735" y="376">runs/&lt;tag&gt;/final/gds/counter.gds</text>
+  <text class="kv"    x="735" y="392">runs/&lt;tag&gt;/final/metrics.csv</text>
+  <text class="sub"   x="735" y="410" font-style="italic">&lt;tag&gt; = LibreLane run id</text>
 
-  <!-- MCP -->
-  <rect class="mcp" x="500" y="100" width="190" height="160" rx="8"/>
-  <text class="label-big" x="595" y="128" text-anchor="middle">MCP server</text>
-  <text class="sub"        x="595" y="148" text-anchor="middle">eda-agents (Python)</text>
+  <!-- Main flow horizontal arrows -->
+  <path class="arrow" d="M 280 290 L 336 290"/>
+  <text class="arrow-label" x="308" y="282">prompt</text>
 
-  <text class="label" x="510" y="180">Skill rendered:</text>
-  <text class="kv"    x="510" y="198">flow.rtl2gds_</text>
-  <text class="kv"    x="510" y="214">gf180_docker</text>
-  <text class="sub"   x="510" y="234">(image tags, mount</text>
-  <text class="sub"   x="510" y="250">paths, librelane cmd)</text>
+  <path class="arrow" d="M 660 290 L 716 290"/>
+  <text class="arrow-label" x="688" y="282">docker exec</text>
 
-  <!-- Container -->
-  <rect class="container" x="730" y="100" width="240" height="320" rx="8"/>
-  <text class="label-big" x="850" y="128" text-anchor="middle">gf180 container</text>
-  <text class="sub"        x="850" y="148" text-anchor="middle">hpretl/iic-osic-tools:next</text>
+  <!-- Bind-mount band (no connectors; band stands alone) -->
+  <rect class="mount" x="40" y="465" width="1040" height="125" rx="8"/>
+  <text class="label-big" x="560" y="490" text-anchor="middle">bind-mount  ·  -v ~/eda/designs:/foss/designs</text>
+  <line class="divider" x1="60" y1="502" x2="1060" y2="502"/>
 
-  <text class="label" x="745" y="180">LibreLane stack:</text>
-  <text class="sub"   x="745" y="198">Yosys -> OpenROAD -> Magic</text>
-  <text class="sub"   x="745" y="214">  -> KLayout -> Netgen</text>
-  <text class="sub"   x="745" y="232">cocotb + iverilog</text>
+  <text class="label" x="160" y="525" text-anchor="middle">Host (laptop)</text>
+  <text class="kv"    x="160" y="545" text-anchor="middle">~/eda/designs/</text>
+  <text class="kv"    x="160" y="561" text-anchor="middle">eda_agents_counter_tui/</text>
 
-  <text class="label" x="745" y="262">Workspace (bind):</text>
-  <text class="kv"    x="745" y="280">/foss/designs/</text>
-  <text class="kv"    x="745" y="296">  eda_agents_counter_tui/</text>
-  <text class="sub"   x="745" y="316">rtl/  tb/  librelane/</text>
+  <!-- bidirectional dashed red SVG arrow (matches container_model.svg convention) -->
+  <path class="biarrow" d="M 300 555 L 780 555"/>
+  <text class="sub" x="540" y="540" text-anchor="middle" font-style="italic">same physical files</text>
 
-  <text class="label" x="745" y="346">After flow:</text>
-  <text class="kv"    x="745" y="364">runs/&lt;tag&gt;/final/</text>
-  <text class="sub"   x="745" y="382">  gds/counter.gds</text>
-  <text class="sub"   x="745" y="398">  metrics.csv (signoff)</text>
+  <text class="label" x="900" y="525" text-anchor="middle">Container (gf180)</text>
+  <text class="kv"    x="900" y="545" text-anchor="middle">/foss/designs/</text>
+  <text class="kv"    x="900" y="561" text-anchor="middle">eda_agents_counter_tui/</text>
 
-  <!-- Arrows -->
-  <!-- student -> cli -->
-  <path class="arrow" d="M 200 180 L 240 180"/>
-  <text class="arrow-label" x="220" y="170">prompt</text>
+  <text class="sub" x="560" y="582" text-anchor="middle" font-style="italic">configured by `scripts/bootstrap_container.sh` (one-time: image pull + container start + mount); artifacts persist after `docker rm gf180`</text>
 
-  <!-- cli <-> mcp -->
-  <path class="skill" d="M 460 200 L 500 200"/>
-  <text class="arrow-label" x="480" y="190" fill="#5a2da8">render_skill()</text>
-
-  <!-- cli -> container -->
-  <path class="arrow" d="M 460 360 L 730 360"/>
-  <text class="arrow-label" x="595" y="350">docker exec gf180 bash -lc '...'</text>
-
-  <!-- container -> bind-mount (host) -->
-  <path class="bind" d="M 850 420 L 850 470"/>
-
-  <!-- Bottom: bind-mount band -->
-  <rect x="30" y="450" width="940" height="60" fill="#fafafa" stroke="#ccc" stroke-width="1" rx="4"/>
-  <text class="label-big" x="50" y="475">Host workspace (bind-mount)</text>
-  <text class="kv"    x="50"  y="495">~/eda/designs/eda_agents_counter_tui/</text>
-  <text class="sub"   x="320" y="495">artifacts survive `docker rm gf180`; same convention as `examples/`.</text>
-
-  <text class="footer" x="500" y="555">chipathon-gf180mcu-librelane-examples - diagrams/tutorial_agent_tui.svg</text>
+  <!-- Footer -->
+  <text class="footer" x="550" y="614">chipathon-gf180mcu-librelane-examples - diagrams/tutorial_agent_tui.svg</text>
 </svg>
