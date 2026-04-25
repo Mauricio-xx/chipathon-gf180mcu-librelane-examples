@@ -35,8 +35,9 @@ the padring fork. See `NOTICE` and `CREDITS.md`.
 
 - Linux host, x86_64, ~40 GB free disk.
 - Docker Engine (test: `docker ps`).
-- Python 3.9+ for the notebook kernel (no extra pip packages needed
-  beyond stdlib + IPython).
+- Python 3.9+ for the notebook kernel. Stdlib + IPython cover examples
+  00-03; example 04 additionally needs `PyYAML` (`pip install pyyaml`)
+  for the chip-top patch step.
 - One-time: `scripts/bootstrap_container.sh` pulls the image
   (~15 GB) and starts a long-running container called `gf180` with
   the bind-mount `~/eda/designs <-> /foss/designs` in place.
