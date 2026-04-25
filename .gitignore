@@ -18,3 +18,21 @@ results.xml
 runs/
 final/
 build/
+
+# tutorials/ — eda-agents experimental tree
+.env
+.env.local
+tutorials/.env
+tutorials/.env.local
+tutorials/**/runs/
+tutorials/**/final/
+tutorials/**/build/
+tutorials/**/sim_build/
+tutorials/**/results.xml
+tutorials/**/rtl2gds_*_results/
+tutorials/**/digital_autoresearch_results/
+
+# Claude Code / opencode local registration (created by eda-init)
+.mcp.json
+.opencode.json
+.claude/

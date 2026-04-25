@@ -1,0 +1,64 @@
+# GF180MCU LibreLane config -- minimal 4-bit counter, eda-agents tutorial 01.
+# Mirrors examples/01_rtl2gds_counter.ipynb exactly so the agent
+# converges on the same metrics signature.
+meta:
+  version: 3
+  flow: Classic
+  substituting_steps:
+    Magic.StreamOut: null
+    KLayout.XOR: null
+    KLayout.DRC: null            # gf180mcuD ships no KLAYOUT_DRC_RUNSET; step crashes with "Unable to open file: .../None"
+                                 # if not gated off. Magic DRC at 0 is the authoritative DRC for this PDK.
+
+RUN_MAGIC_STREAMOUT: false
+RUN_KLAYOUT_XOR: false
+RUN_KLAYOUT_DRC: false
+
+DESIGN_NAME: counter
+VERILOG_FILES:
+  - dir::../rtl/counter.v
+CLOCK_PORT: clk
+CLOCK_PERIOD: 50
+
+# Die area: 300x300 um absolute (plenty of room for 4 flops).
+FP_SIZING: absolute
+DIE_AREA: [0.0, 0.0, 300.0, 300.0]
+
+# Power / ground nets.
+VDD_NETS:
+  - VDD
+GND_NETS:
+  - VSS
+
+# Signoff / streamout.
+PRIMARY_GDSII_STREAMOUT_TOOL: klayout
+
+# Routing / ESD.
+DIODE_ON_PORTS: in
+RT_MAX_LAYER: Metal4
+PDN_MULTILAYER: false
+
+# Power distribution network (straps + pitch).
+PDN_VWIDTH: 5
+PDN_HWIDTH: 5
+PDN_VSPACING: 1
+PDN_HSPACING: 1
+PDN_VPITCH: 75
+PDN_HPITCH: 75
+PDN_EXTEND_TO: boundary
+
+# Placement.
+PL_TARGET_DENSITY_PCT: 65
+MAX_FANOUT_CONSTRAINT: 10
+
+# CTS defaults.
+CTS_CLK_MAX_WIRE_LENGTH: 0
+CTS_DISTANCE_BETWEEN_BUFFERS: 0
+CTS_SINK_CLUSTERING_SIZE: 20
+CTS_SINK_CLUSTERING_MAX_DIAMETER: 60
+
+# Margins.
+TOP_MARGIN_MULT: 1
+BOTTOM_MARGIN_MULT: 1
+LEFT_MARGIN_MULT: 6
+RIGHT_MARGIN_MULT: 6

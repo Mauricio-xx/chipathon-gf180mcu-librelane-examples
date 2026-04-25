@@ -141,6 +141,22 @@ All notebooks default their `RUN_*` flags to `False` so the first pass
 through every cell only prints the commands. Flip each flag once you
 are ready to commit to the (sometimes hours-long) step.
 
+## Experimental tutorials (eda-agents)
+
+> Optional, AI-driven offshoots — **not part of the chipathon tapeout signoff path**.
+
+The [`tutorials/`](tutorials/) subtree shows three ways to drive the **same** 4-bit counter from `examples/01_*` through an LLM agent:
+
+| # | Tutorial | What it demonstrates |
+|---|----------|----------------------|
+| 01 | [`01_counter_with_agent_tui/`](tutorials/01_counter_with_agent_tui/) | Conversational: open Claude Code or opencode, ask the `gf180-docker-digital` agent to harden the counter. |
+| 02 | [`02_counter_python_api/`](tutorials/02_counter_python_api/) | Programmatic: ~30 lines of Python via `GenericDesign` + `ProjectManager`. |
+| 03 | [`03_counter_autoresearch/`](tutorials/03_counter_autoresearch/) | Greedy AI loop pareto-optimises QoR knobs (density, clock period, PDN width) under a $0.30 budget cap. |
+
+All three depend on the [`eda-agents`](https://github.com/Mauricio-xx/eda-agents) Python package. Read [`tutorials/README.md`](tutorials/README.md) and [`tutorials/docs/eda_agents_setup.md`](tutorials/docs/eda_agents_setup.md) before opening any of them.
+
+For chipathon **tapeout**, stick with `examples/`. The tutorials are for *learning the agentic flow*.
+
 ## License
 
 Apache-2.0. See `LICENSE`, `NOTICE`, `CREDITS.md`, `AUTHORS.md`.

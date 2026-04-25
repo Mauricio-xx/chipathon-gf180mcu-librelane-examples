@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560" font-family="Helvetica,Arial,sans-serif">
+  <title>Tutorial 03 - Counter QoR autoresearch greedy loop</title>
+  <desc>
+    DigitalAutoresearchRunner iterates the agent over a discrete knob space (PL_TARGET_DENSITY x
+    CLOCK_PERIOD x PDN_VWIDTH). At each iteration it picks a point, runs LibreLane, scores by FoM
+    (die area + setup slack + power), proposes the next point, and keeps the best. Capped at
+    BUDGET=3 evaluations. Default backend is opencode + Gemini Flash for cheap multi-eval loops.
+    Per-iteration rationale lives in program.md; the FoM table accumulates in results.tsv.
+  </desc>
+
+  <style>
+    .title       { font-size:22px; fill:#111; text-anchor:middle; font-weight:bold; }
+    .subtitle    { font-size:14px; fill:#444; text-anchor:middle; font-style:italic; }
+    .knob        { fill:#fff7e6; stroke:#a05a00; stroke-width:2; }
+    .runner      { fill:#f4ecff; stroke:#5a2da8; stroke-width:2.5; }
+    .eval        { fill:#eefdef; stroke:#156b2e; stroke-width:2; }
+    .fom         { fill:#eef6ff; stroke:#003b73; stroke-width:2; }
+    .output      { fill:#fafafa; stroke:#444; stroke-width:1.5; }
+    .label-big   { font-size:17px; fill:#111; font-weight:bold; }
+    .label       { font-size:13px; fill:#111; font-weight:bold; }
+    .kv          { font-size:12px; fill:#111; font-family:monospace; }
+    .sub         { font-size:12px; fill:#444; }
+    .arrow       { fill:none; stroke:#555; stroke-width:1.8; marker-end:url(#arrowhead); }
+    .loop        { fill:none; stroke:#5a2da8; stroke-width:2.2; stroke-dasharray:6,4; marker-end:url(#arrowhead-purple); }
+    .arrow-label { font-size:13px; fill:#444; font-weight:bold; text-anchor:middle; }
+    .footer      { font-size:11px; fill:#777; text-anchor:middle; }
+    .winner      { fill:#fff8b8; stroke:#a08000; stroke-width:2.5; }
+  </style>
+
+  <defs>
+    <marker id="arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L0,10 L9,5 z" fill="#555"/>
+    </marker>
+    <marker id="arrowhead-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L0,10 L9,5 z" fill="#5a2da8"/>
+    </marker>
+  </defs>
+
+  <!-- header -->
+  <text class="title"    x="500" y="30">Tutorial 03 - Greedy QoR autoresearch loop (BUDGET=3)</text>
+  <text class="subtitle" x="500" y="52">runner picks a knob point, evaluates, scores, proposes next; capped at 3 LibreLane runs</text>
+
+  <!-- Knob space -->
+  <rect class="knob" x="30" y="100" width="220" height="200" rx="8"/>
+  <text class="label-big" x="140" y="125" text-anchor="middle">Knob space</text>
+  <text class="sub"        x="140" y="143" text-anchor="middle">3 x 3 x 3 = 27 discrete points</text>
+  <text class="label" x="40" y="170">PL_TARGET_DENSITY_PCT:</text>
+  <text class="kv"    x="60" y="188">{60, 65, 70}</text>
+  <text class="label" x="40" y="212">CLOCK_PERIOD (ns):</text>
+  <text class="kv"    x="60" y="230">{50, 40, 30}</text>
+  <text class="label" x="40" y="254">PDN_VWIDTH (um):</text>
+  <text class="kv"    x="60" y="272">{3, 5, 7}</text>
+  <text class="sub"   x="40" y="294">budget=3 covers ~10% of space</text>
+
+  <!-- Runner -->
+  <rect class="runner" x="290" y="100" width="200" height="200" rx="8"/>
+  <text class="label-big" x="390" y="125" text-anchor="middle">DigitalAutoresearch</text>
+  <text class="label-big" x="390" y="145" text-anchor="middle">Runner (greedy)</text>
+  <text class="label" x="300" y="175">Per iteration:</text>
+  <text class="sub"   x="300" y="193">1. pick (or propose) point</text>
+  <text class="sub"   x="300" y="209">2. ask agent to evaluate</text>
+  <text class="sub"   x="300" y="225">3. compute FoM</text>
+  <text class="sub"   x="300" y="241">4. update best so far</text>
+  <text class="label" x="300" y="270">Backend:</text>
+  <text class="kv"    x="300" y="288">opencode + Gemini Flash</text>
+
+  <!-- Three evals -->
+  <rect class="eval" x="540" y="100" width="200" height="55" rx="6"/>
+  <text class="label" x="550" y="120">Eval 1: density=65, clk=50</text>
+  <text class="sub"   x="550" y="138">LibreLane (~3-5 min) -&gt; metrics</text>
+  <text class="kv"    x="550" y="153">FoM = 0.42</text>
+
+  <rect class="eval" x="540" y="170" width="200" height="55" rx="6"/>
+  <text class="label" x="550" y="190">Eval 2: density=70, clk=40</text>
+  <text class="sub"   x="550" y="208">LibreLane (~3-5 min) -&gt; metrics</text>
+  <text class="kv"    x="550" y="223">FoM = 0.51</text>
+
+  <rect class="winner" x="540" y="240" width="200" height="60" rx="6"/>
+  <text class="label" x="550" y="260">Eval 3: density=70, clk=40, pdn=7</text>
+  <text class="sub"   x="550" y="278">best so far -&gt; declare winner</text>
+  <text class="kv"    x="550" y="293">FoM = 0.50 (Eval 2 wins)</text>
+
+  <!-- FoM ranking -->
+  <rect class="fom" x="780" y="100" width="190" height="200" rx="8"/>
+  <text class="label-big" x="875" y="125" text-anchor="middle">FoM</text>
+  <text class="sub"        x="875" y="143" text-anchor="middle">die area + setup slack + power</text>
+  <text class="label" x="790" y="172">Pick best on ties:</text>
+  <text class="sub"   x="790" y="190">- minimum die_area</text>
+  <text class="sub"   x="790" y="206">- positive setup slack</text>
+  <text class="sub"   x="790" y="222">- minimum power</text>
+  <text class="label" x="790" y="252">Cost cap (implicit):</text>
+  <text class="sub"   x="790" y="270">~$0.05-0.10 per agent turn</text>
+  <text class="sub"   x="790" y="286">~$0.20-0.30 total budget</text>
+
+  <!-- Outputs -->
+  <rect class="output" x="290" y="400" width="450" height="120" rx="6"/>
+  <text class="label-big" x="515" y="425" text-anchor="middle">Outputs (under WORK_DIR/)</text>
+  <text class="label" x="305" y="455">program.md</text>
+  <text class="sub"   x="305" y="473">per-iteration agent rationale (markdown log)</text>
+  <text class="sub"   x="305" y="489">"why I picked density=70 next..."</text>
+  <text class="label" x="305" y="510">results.tsv</text>
+  <text class="sub"   x="490" y="510">tab-separated FoM table, one row per eval</text>
+
+  <!-- Arrows -->
+  <!-- knob -> runner -->
+  <path class="arrow" d="M 250 200 L 290 200"/>
+
+  <!-- runner -> evals -->
+  <path class="arrow" d="M 490 130 L 540 127"/>
+  <path class="arrow" d="M 490 195 L 540 197"/>
+  <path class="arrow" d="M 490 260 L 540 270"/>
+  <text class="arrow-label" x="515" y="115">eval</text>
+
+  <!-- evals -> FoM -->
+  <path class="arrow" d="M 740 130 L 780 200"/>
+  <path class="arrow" d="M 740 200 L 780 200"/>
+  <path class="arrow" d="M 740 270 L 780 200"/>
+
+  <!-- FoM -> runner (loop back) -->
+  <path class="loop" d="M 875 305 Q 875 360, 600 360 Q 390 360, 390 300"/>
+  <text class="arrow-label" x="600" y="375" fill="#5a2da8">propose next point (greedy)</text>
+
+  <!-- runner -> outputs -->
+  <path class="arrow" d="M 390 305 L 390 400"/>
+
+  <text class="footer" x="500" y="555">chipathon-gf180mcu-librelane-examples - diagrams/tutorial_autoresearch.svg</text>
+</svg>

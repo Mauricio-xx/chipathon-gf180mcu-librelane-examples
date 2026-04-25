@@ -71,6 +71,23 @@ eda-agents tree) but the SVG sources are new.
 - `diagrams/multi_macro_hierarchy.svg`
 - `diagrams/multi_macro_verification.svg`
 - `diagrams/container_model.svg`
+- `diagrams/tutorial_agent_tui.svg` *(experimental tutorials)*
+- `diagrams/tutorial_python_api.svg` *(experimental tutorials)*
+- `diagrams/tutorial_autoresearch.svg` *(experimental tutorials)*
+
+## Experimental tutorials (`tutorials/`)
+
+**Mauricio Montanares** - authored for this repository, ports structure from the upstream `eda-agents` project.
+
+The `tutorials/` subtree shows three AI-driven walkthroughs over the **same** 4-bit counter from `examples/01_*`:
+
+- `tutorials/01_counter_with_agent_tui/` — invokes the `gf180-docker-digital` agent shipped at `eda-agents/.claude/agents/gf180-docker-digital.md` and `eda-agents/.opencode/agent/gf180-docker-digital.md`. Tutorial files (notebook, README, agent walkthrough doc, RTL/TB/LibreLane staging) are new; agent definition and `flow.rtl2gds_gf180_docker` skill come from eda-agents.
+- `tutorials/02_counter_python_api/` — port of `eda-agents/tutorials/agents-analog-digital/demo/agents_rtl2gds_counter.{ipynb,py}`, adapted to chipathon paths and to read RTL from `rtl/counter.v` instead of inlined strings.
+- `tutorials/03_counter_autoresearch/` — port of `eda-agents/tutorials/agents-analog-digital/demo/agents_digital_autoresearch.{ipynb,py}`, same path adaptations.
+
+These tutorials are clearly marked **experimental** in their READMEs because they depend on a moving `eda-agents` upstream and an LLM provider; the chipathon `examples/` are the validated tapeout path.
+
+The shared 4-bit counter RTL (`tutorials/0?_*/rtl/counter.v`) and minimal LibreLane config are copied verbatim from `eda-agents/tutorials/rtl2gds-gf180-docker/demo/rtl2gds_counter.{ipynb,py}`, also originally authored by Mauricio Montanares.
 
 ## Notebooks 00, 01, 02, 03
 

@@ -135,3 +135,6 @@ rm -rf ~/eda/designs/*/final        # idem for final/ dirs
 | Padring fork (nb 00/03 baseline) | `~/eda/designs/chipathon_padring/template/` | `/foss/designs/chipathon_padring/template/` |
 | Padring fork copy (nb 04 only)   | `~/eda/designs/multimacro_chipathon/template/` | `/foss/designs/multimacro_chipathon/template/` |
 | Multi-macro staging (nb 04)      | `~/eda/designs/multimacro_demo/` | `/foss/designs/multimacro_demo/` |
+| Experimental T01 (TUI agent)     | `~/eda/designs/eda_agents_counter_tui/`         | `/foss/designs/eda_agents_counter_tui/` |
+| Experimental T02 (Python API)    | `~/eda/designs/eda_agents_counter_pyapi/`       | `/foss/designs/eda_agents_counter_pyapi/` |
+| Experimental T03 (autoresearch)  | `~/eda/designs/eda_agents_counter_autoresearch/`| `/foss/designs/eda_agents_counter_autoresearch/` |
