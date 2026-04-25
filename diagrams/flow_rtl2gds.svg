@@ -30,9 +30,11 @@
   <text class="title" x="600" y="30">RTL to GDS on GF180MCU</text>
   <text class="caption" x="600" y="52">LibreLane orchestrates five upstream tools; one YAML, one command.</text>
 
-  <!-- orchestrator frame around the synth..signoff band -->
-  <rect class="orchestrator-frame" x="150" y="110" width="950" height="140" rx="10"/>
-  <text class="frame-label" x="625" y="105">LibreLane (v3.0.0, Classic or Chip flow)</text>
+  <!-- orchestrator frame around the synth..signoff band. The frame
+       label sits clearly above the frame border so it does not crowd
+       the boxes inside. -->
+  <rect class="orchestrator-frame" x="150" y="120" width="950" height="130" rx="10"/>
+  <text class="frame-label" x="625" y="98">LibreLane (v3.0.0, Classic or Chip flow)</text>
 
   <!-- RTL endpoint -->
   <rect class="endpoint" x="20"  y="150" width="110" height="60" rx="6"/>

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 540" font-family="Helvetica,Arial,sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 570" font-family="Helvetica,Arial,sans-serif">
   <title>Anatomy of a LibreLane slot in the wafer-space template</title>
   <desc>
     The three files that, together, define one slot (1x1 / 0p5x1 /
@@ -7,15 +7,15 @@
   </desc>
 
   <style>
-    .title      { font-size:20px; fill:#111; text-anchor:middle; font-weight:bold; }
-    .subtitle   { font-size:13px; fill:#444; text-anchor:middle; font-style:italic; }
+    .title      { font-size:22px; fill:#111; text-anchor:middle; font-weight:bold; }
+    .subtitle   { font-size:14px; fill:#444; text-anchor:middle; font-style:italic; }
     .file-frame { fill:#f7f7f9; stroke:#333; stroke-width:1.5; }
-    .file-name  { font-size:14px; fill:#003b73; font-family:monospace; font-weight:bold; }
-    .file-role  { font-size:12px; fill:#555; font-style:italic; }
-    .code       { font-size:11px; fill:#111; font-family:monospace; }
-    .bullet     { font-size:12px; fill:#222; }
+    .file-name  { font-size:15px; fill:#003b73; font-family:monospace; font-weight:bold; }
+    .file-role  { font-size:13px; fill:#555; font-style:italic; }
+    .code       { font-size:13px; fill:#111; font-family:monospace; }
+    .bullet     { font-size:13px; fill:#222; }
     .arrow      { fill:none; stroke:#b00; stroke-width:1.8; marker-end:url(#arrowhead); }
-    .caption    { font-size:12px; fill:#333; }
+    .caption    { font-size:14px; fill:#333; }
     .footer     { font-size:11px; fill:#777; text-anchor:middle; }
   </style>
 
@@ -84,11 +84,12 @@
   <text class="code"       x="715" y="434">  slots/slot_$(SLOT).yaml \</text>
   <text class="code"       x="715" y="450">  librelane/config.yaml</text>
 
-  <!-- flow arrow: anatomy -> make target -->
-  <path class="arrow" d="M500,500 L500,515"/>
-  <text class="caption" x="500" y="530" text-anchor="middle" font-weight="bold" fill="#b00">
-    -> SLOT=workshop make librelane  (stock Makefile, no other edits)
+  <!-- flow arrow: anatomy -> make target. Bigger and pointed at the
+       caption so the visual reading order stays top-to-bottom. -->
+  <path class="arrow" d="M500,492 L500,510"/>
+  <text class="caption" x="500" y="528" text-anchor="middle" font-weight="bold" fill="#b00">
+    -&gt; SLOT=workshop make librelane  (stock Makefile, no other edits)
   </text>
 
-  <text class="footer" x="500" y="478">chipathon-gf180mcu-librelane-examples - diagrams/slot_anatomy.svg</text>
+  <text class="footer" x="500" y="555" text-anchor="middle">chipathon-gf180mcu-librelane-examples - diagrams/slot_anatomy.svg</text>
 </svg>

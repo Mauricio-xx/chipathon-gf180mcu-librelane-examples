@@ -201,9 +201,18 @@
     </g>
   </g>
 
-  <!-- clockwise arrow inside, placed above CORE so it does not clash with PAD_SOUTH label -->
-  <path class="arrow-cw" d="M 225 255  Q 400 205 575 255"/>
-  <text class="note" x="400" y="200" text-anchor="middle">LibreLane reads pad lists CW from SW</text>
+  <!-- Clockwise reading order: a 3-segment path that traces the
+       perimeter of the die inside the pad ring, starting at the SW
+       corner (where each PAD_* list starts) and ending at the SE
+       corner (where each list ends). The arrowhead points down at
+       SE, the visual end of one full CW pass. -->
+  <path class="arrow-cw" d="M 135,650 L 135,135 L 665,135 L 665,650"
+        fill="none" stroke-width="2.2"/>
+  <circle cx="135" cy="650" r="6" fill="#b00"/>
+  <text class="note" x="125" y="640" text-anchor="end" fill="#b00" font-size="13">1) start</text>
+  <text class="note" x="400" y="120" text-anchor="middle" fill="#b00" font-size="13">
+    LibreLane reads each PAD_* list CW from the SW corner
+  </text>
 
   <!-- legend -->
   <g transform="translate(40 760)">
