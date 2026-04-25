@@ -69,6 +69,7 @@ eda-agents tree) but the SVG sources are new.
 - `diagrams/slot_anatomy.svg`
 - `diagrams/workshop_pad_map.svg`
 - `diagrams/multi_macro_hierarchy.svg`
+- `diagrams/multi_macro_verification.svg`
 - `diagrams/container_model.svg`
 
 ## Notebooks 00, 01, 02, 03

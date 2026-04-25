@@ -55,11 +55,18 @@ the fork:
   (derivation of wafer-space/gf180mcu-project-template + JuanMoya pad layout)
 
 Notebooks 00, 03 clone the fork on demand under
-`~/eda/designs/chipathon_padring/template/`. Notebook 04 clones a
-**dedicated** copy at `~/eda/designs/multimacro_chipathon/template/`
-so its `MACROS:` + `PDN_MACRO_CONNECTIONS:` patches never corrupt the
-baseline used by notebook 03. All fork clones are idempotent: if the
-path already exists the step is a no-op.
+`~/eda/designs/chipathon_padring/template/`. Notebook 04 uses two
+host paths so it never corrupts the baseline shared with notebook 03:
+
+- `~/eda/designs/multimacro_chipathon/template/` -- a **dedicated**
+  fork copy where the `MACROS:` + `PDN_MACRO_CONNECTIONS:` patches
+  land before the chip-top run.
+- `~/eda/designs/multimacro_demo/` -- staging area where the example
+  copies its `rtl/`, `tb/` and `librelane/` trees so the container
+  sees them under `/foss/designs/multimacro_demo/`.
+
+All fork clones are idempotent: if the path already exists the step
+is a no-op.
 
 ![slot anatomy](diagrams/slot_anatomy.svg)
 

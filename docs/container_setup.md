@@ -132,5 +132,6 @@ rm -rf ~/eda/designs/*/final        # idem for final/ dirs
 | Workspace root | `~/eda/designs` | `/foss/designs` |
 | Counter demo (nb 01) | `~/eda/designs/counter_demo/` | `/foss/designs/counter_demo/` |
 | chip_top_custom (nb 02) | `~/eda/designs/chip_custom/template/` | `/foss/designs/chip_custom/template/` |
-| Padring fork + nb 03/04 | `~/eda/designs/chipathon_padring/template/` | `/foss/designs/chipathon_padring/template/` |
-| Multi-macro staging (nb 04) | `~/eda/designs/multimacro_demo/` | `/foss/designs/multimacro_demo/` |
+| Padring fork (nb 00/03 baseline) | `~/eda/designs/chipathon_padring/template/` | `/foss/designs/chipathon_padring/template/` |
+| Padring fork copy (nb 04 only)   | `~/eda/designs/multimacro_chipathon/template/` | `/foss/designs/multimacro_chipathon/template/` |
+| Multi-macro staging (nb 04)      | `~/eda/designs/multimacro_demo/` | `/foss/designs/multimacro_demo/` |

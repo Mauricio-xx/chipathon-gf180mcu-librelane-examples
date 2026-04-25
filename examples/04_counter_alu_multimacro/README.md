@@ -21,10 +21,12 @@ Verification chain the notebook walks end to end:
 |   |-- alu_macro.sv                   # registered wrapper around alu.sv
 |   `-- chip_core_multi.sv             # chip_core replacement: instantiates both macros
 |-- tb/
-|   |-- Makefile                       # dispatcher: test-counter / test-alu / test-all
+|   |-- Makefile                       # dispatcher: test-{counter,alu,alu-macro} (RTL + GL)
 |   |-- Makefile.cocotb                # cocotb standard include
+|   |-- timescale.v                    # 1ns/1ps for GL sim against gf180 cells
 |   |-- test_counter.py                # 4 cocotb tests (reset/increment/enable/wrap)
-|   `-- test_alu.py                    # exhaustive 16 x 16 x 8 sweep
+|   |-- test_alu.py                    # exhaustive 16 x 16 x 8 sweep on the comb ALU
+|   `-- test_alu_macro.py              # 3 cocotb tests on the registered ALU wrapper
 `-- librelane/
     |-- counter_macro.yaml             # Classic flow config for counter
     |-- alu_macro.yaml                 # Classic flow config for alu_macro
