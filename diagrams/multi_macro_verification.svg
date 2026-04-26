@@ -36,8 +36,8 @@
     </marker>
   </defs>
 
-  <text class="title"   x="630" y="32">Verification chain — example 04 (counter + ALU multi-macro)</text>
-  <text class="caption" x="630" y="54">Every box maps to one notebook step. Dashed arc = RTL vs GL equivalence cross-check.</text>
+  <text class="title"   x="630" y="28">Verification chain — example 04 (counter + ALU multi-macro)</text>
+  <text class="caption" x="630" y="48">Every box maps to one notebook step. Dashed arc = RTL vs GL equivalence cross-check.</text>
 
   <!-- track labels -->
   <text class="track-label" x="30" y="115">counter</text>
@@ -60,7 +60,7 @@
 
   <!-- one-librelane-call orchestrator frame for counter track -->
   <rect class="orchestrator-frame" x="455" y="68" width="800" height="98" rx="8"/>
-  <text class="frame-label" x="855" y="63">one librelane call  ·  Classic flow + --save-views-to</text>
+  <text class="frame-label" x="460" y="63" text-anchor="start">1× librelane call for counter macro  ·  Classic flow + --save-views-to</text>
 
   <rect class="synth-box" x="470" y="80"  width="150" height="70" rx="6"/>
   <text class="label"    x="545" y="108">Synthesis</text>
@@ -108,7 +108,7 @@
 
   <!-- one-librelane-call orchestrator frame for alu_macro track -->
   <rect class="orchestrator-frame" x="455" y="248" width="800" height="98" rx="8"/>
-  <text class="frame-label" x="855" y="243">one librelane call  ·  Classic flow + --save-views-to</text>
+  <text class="frame-label" x="460" y="243" text-anchor="start">1× librelane call for alu_macro  ·  Classic flow + --save-views-to</text>
 
   <rect class="synth-box" x="470" y="260"  width="150" height="70" rx="6"/>
   <text class="label"    x="545" y="288">Synthesis</text>

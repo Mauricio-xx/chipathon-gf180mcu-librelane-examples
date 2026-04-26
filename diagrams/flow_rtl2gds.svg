@@ -79,7 +79,7 @@
        except Magic DRC which is the gf180 DRC engine of record) -->
   <rect class="signoff-box" x="970" y="150" width="125" height="60" rx="6"/>
   <text class="label"       x="1032" y="176">Signoff</text>
-  <text class="sublabel"    x="1032" y="194">Magic DRC + KLayout LVS</text>
+  <text class="sublabel"    x="1032" y="194">Magic DRC + Netgen LVS</text>
 
   <!-- GDS endpoint -->
   <rect class="endpoint" x="1115" y="150" width="80" height="60" rx="6"/>
@@ -97,13 +97,13 @@
   <path class="arrow" d="M1095,180 L1115,180"/>
 
   <!-- signoff breakdown (matches gf180mcuD config in examples/01_*:
-       RUN_KLAYOUT_DRC=false, RUN_MAGIC_STREAMOUT=false; KLayout writes
-       the GDS, Magic does the DRC, KLayout does LVS + antenna). -->
+       meta.substituting_steps.KLayout.DRC: null, RUN_MAGIC_STREAMOUT=false;
+       KLayout writes the GDS, Magic does the DRC, Netgen does LVS, KLayout antenna). -->
   <text class="sublabel" x="600" y="288" font-size="13" fill="#333" text-anchor="middle">
-    Signoff = Magic DRC + KLayout LVS + KLayout antenna + KLayout streamout (final GDS)
+    Signoff = Magic DRC + Netgen LVS + KLayout antenna + KLayout streamout (final GDS)
   </text>
   <text class="sublabel" x="600" y="306" font-size="13" fill="#333" text-anchor="middle">
-    Note: KLayout DRC ships no runset for gf180mcuD and is gated off (RUN_KLAYOUT_DRC: false).
+    Note: KLayout DRC ships no runset for gf180mcuD and is gated off (meta.substituting_steps.KLayout.DRC: null).
   </text>
   <text class="sublabel" x="600" y="324" font-size="13" fill="#333" text-anchor="middle">
     Every metric lands in a single file: final/metrics.csv.

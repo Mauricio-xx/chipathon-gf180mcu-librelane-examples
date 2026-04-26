@@ -121,28 +121,28 @@
   <!-- 22 north pads, CW from NE: 4 bidir 3..0, 6 analog 15..10,
        dvss_pads[0], dvdd_pads[0], 10 analog 9..0 -->
   <g>
-    <rect class="bidir" x="624" y="68" width="18" height="20"/><text class="pad-num" x="633" y="62">1</text>
-    <rect class="bidir" x="602" y="68" width="18" height="20"/><text class="pad-num" x="611" y="62">2</text>
-    <rect class="bidir" x="580" y="68" width="18" height="20"/><text class="pad-num" x="589" y="62">3</text>
-    <rect class="bidir" x="558" y="68" width="18" height="20"/><text class="pad-num" x="567" y="62">4</text>
-    <rect class="ana"   x="536" y="68" width="18" height="20"/><text class="pad-num" x="545" y="62">5</text>
-    <rect class="ana"   x="514" y="68" width="18" height="20"/><text class="pad-num" x="523" y="62">6</text>
-    <rect class="ana"   x="492" y="68" width="18" height="20"/><text class="pad-num" x="501" y="62">7</text>
-    <rect class="ana"   x="470" y="68" width="18" height="20"/><text class="pad-num" x="479" y="62">8</text>
-    <rect class="ana"   x="448" y="68" width="18" height="20"/><text class="pad-num" x="457" y="62">9</text>
-    <rect class="ana"   x="426" y="68" width="18" height="20"/><text class="pad-num" x="435" y="62">10</text>
-    <rect class="dvss"  x="404" y="68" width="18" height="20"/><text class="pad-num" x="413" y="62">11</text>
-    <rect class="dvdd"  x="382" y="68" width="18" height="20"/><text class="pad-num" x="391" y="62">12</text>
-    <rect class="ana"   x="360" y="68" width="18" height="20"/><text class="pad-num" x="369" y="62">13</text>
-    <rect class="ana"   x="338" y="68" width="18" height="20"/><text class="pad-num" x="347" y="62">14</text>
-    <rect class="ana"   x="316" y="68" width="18" height="20"/><text class="pad-num" x="325" y="62">15</text>
-    <rect class="ana"   x="294" y="68" width="18" height="20"/><text class="pad-num" x="303" y="62">16</text>
-    <rect class="ana"   x="272" y="68" width="18" height="20"/><text class="pad-num" x="281" y="62">17</text>
-    <rect class="ana"   x="250" y="68" width="18" height="20"/><text class="pad-num" x="259" y="62">18</text>
-    <rect class="ana"   x="228" y="68" width="18" height="20"/><text class="pad-num" x="237" y="62">19</text>
-    <rect class="ana"   x="206" y="68" width="18" height="20"/><text class="pad-num" x="215" y="62">20</text>
-    <rect class="ana"   x="184" y="68" width="18" height="20"/><text class="pad-num" x="193" y="62">21</text>
-    <rect class="ana"   x="162" y="68" width="18" height="20"/><text class="pad-num" x="171" y="62">22</text>
+    <rect class="bidir" x="624" y="68" width="18" height="20"/><text class="pad-num" x="633" y="102">1</text>
+    <rect class="bidir" x="602" y="68" width="18" height="20"/><text class="pad-num" x="611" y="102">2</text>
+    <rect class="bidir" x="580" y="68" width="18" height="20"/><text class="pad-num" x="589" y="102">3</text>
+    <rect class="bidir" x="558" y="68" width="18" height="20"/><text class="pad-num" x="567" y="102">4</text>
+    <rect class="ana"   x="536" y="68" width="18" height="20"/><text class="pad-num" x="545" y="102">5</text>
+    <rect class="ana"   x="514" y="68" width="18" height="20"/><text class="pad-num" x="523" y="102">6</text>
+    <rect class="ana"   x="492" y="68" width="18" height="20"/><text class="pad-num" x="501" y="102">7</text>
+    <rect class="ana"   x="470" y="68" width="18" height="20"/><text class="pad-num" x="479" y="102">8</text>
+    <rect class="ana"   x="448" y="68" width="18" height="20"/><text class="pad-num" x="457" y="102">9</text>
+    <rect class="ana"   x="426" y="68" width="18" height="20"/><text class="pad-num" x="435" y="102">10</text>
+    <rect class="dvss"  x="404" y="68" width="18" height="20"/><text class="pad-num" x="413" y="102">11</text>
+    <rect class="dvdd"  x="382" y="68" width="18" height="20"/><text class="pad-num" x="391" y="102">12</text>
+    <rect class="ana"   x="360" y="68" width="18" height="20"/><text class="pad-num" x="369" y="102">13</text>
+    <rect class="ana"   x="338" y="68" width="18" height="20"/><text class="pad-num" x="347" y="102">14</text>
+    <rect class="ana"   x="316" y="68" width="18" height="20"/><text class="pad-num" x="325" y="102">15</text>
+    <rect class="ana"   x="294" y="68" width="18" height="20"/><text class="pad-num" x="303" y="102">16</text>
+    <rect class="ana"   x="272" y="68" width="18" height="20"/><text class="pad-num" x="281" y="102">17</text>
+    <rect class="ana"   x="250" y="68" width="18" height="20"/><text class="pad-num" x="259" y="102">18</text>
+    <rect class="ana"   x="228" y="68" width="18" height="20"/><text class="pad-num" x="237" y="102">19</text>
+    <rect class="ana"   x="206" y="68" width="18" height="20"/><text class="pad-num" x="215" y="102">20</text>
+    <rect class="ana"   x="184" y="68" width="18" height="20"/><text class="pad-num" x="193" y="102">21</text>
+    <rect class="ana"   x="162" y="68" width="18" height="20"/><text class="pad-num" x="171" y="102">22</text>
   </g>
 
   <!-- ============================================================ -->
@@ -214,7 +214,7 @@
   <!-- CW arrow inside the die (indicates SW start) -->
   <circle cx="135" cy="650" r="5" fill="#b00"/>
   <text class="note" x="125" y="640" text-anchor="end">1) start</text>
-  <text class="note" x="400" y="105" text-anchor="middle">CW reading from SW corner: each PAD_* list begins at index 1 here</text>
+  <text class="note" x="400" y="180" text-anchor="middle">CW reading from SW corner: each PAD_* list begins at index 1 here</text>
   <path class="arrow-cw" d="M 135,650 L 135,135 L 665,135"/>
 
   <!-- ============================================================ -->
