@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 640" font-family="Helvetica,Arial,sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 670" font-family="Helvetica,Arial,sans-serif">
   <title>Multi-macro hierarchy on the chipathon workshop slot</title>
   <desc>
     Hierarchy of the counter + ALU multi-macro example. Outer blue
@@ -47,18 +47,18 @@
   <text class="subtitle" x="450" y="52">counter + alu_macro, each hardened standalone, then integrated</text>
 
   <!-- outer: workshop slot padring -->
-  <rect class="padring-frame" x="40" y="80" width="820" height="510" rx="8"/>
+  <rect class="padring-frame" x="40" y="80" width="820" height="540" rx="8"/>
   <text class="padring-label" x="55" y="102">workshop padring  (2935 x 2935 um die)</text>
   <text class="sub" x="55" y="118">60 analog + 20 bidir + 4 DVDD + 4 DVSS + clk_pad + rst_n_pad + 4 corners</text>
 
   <!-- pad edge hints (north-up convention, matches workshop_pad_map.svg) -->
   <text class="sub" x="450" y="145" text-anchor="middle">PAD_NORTH</text>
-  <text class="sub" x="450" y="583" text-anchor="middle">PAD_SOUTH</text>
-  <text class="sub" x="60"  y="345" writing-mode="tb" text-anchor="middle">PAD_WEST</text>
-  <text class="sub" x="838" y="345" writing-mode="tb" text-anchor="middle">PAD_EAST</text>
+  <text class="sub" x="450" y="613" text-anchor="middle">PAD_SOUTH</text>
+  <text class="sub" x="60"  y="350" writing-mode="tb" text-anchor="middle">PAD_WEST</text>
+  <text class="sub" x="838" y="350" writing-mode="tb" text-anchor="middle">PAD_EAST</text>
 
   <!-- chip_top.sv band -->
-  <rect class="chiptop-frame" x="110" y="160" width="680" height="410" rx="6"/>
+  <rect class="chiptop-frame" x="110" y="160" width="680" height="440" rx="6"/>
   <text class="chiptop-label" x="125" y="180">chip_top.sv  (fixed - wires padring to chip_core)</text>
   <text class="sub" x="125" y="196">clk / rst_n / bidir_out[19:0] / bidir_in[19:0] / analog[59:0]</text>
 
@@ -114,7 +114,7 @@
   </text>
 
   <!-- footer -->
-  <text class="sub" x="450" y="620" text-anchor="middle" fill="#777">
+  <text class="sub" x="450" y="655" text-anchor="middle" fill="#777">
     chipathon-gf180mcu-librelane-examples - diagrams/multi_macro_hierarchy.svg
   </text>
 </svg>

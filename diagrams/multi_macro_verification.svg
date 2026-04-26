@@ -200,19 +200,22 @@
   <!-- ============================================================ -->
   <!-- LEGEND (moved below all tracks; viewBox grew to 660)          -->
   <!-- ============================================================ -->
+  <!-- Inline style="text-anchor:start" wins over the .sublabel CSS
+       rule (which sets text-anchor:middle). Without this override the
+       labels would be centered on x and overlap the colour swatches. -->
   <g transform="translate(30,575)">
     <rect class="rtl-box"     x="0"    y="0" width="18" height="14"/>
-    <text class="sublabel"    x="26"   y="11" text-anchor="start">RTL / source</text>
+    <text class="sublabel"    x="26"   y="11" style="text-anchor:start">RTL / source</text>
     <rect class="rtlsim-box"  x="160"  y="0" width="18" height="14"/>
-    <text class="sublabel"    x="186"  y="11" text-anchor="start">RTL sim</text>
+    <text class="sublabel"    x="186"  y="11" style="text-anchor:start">RTL sim</text>
     <rect class="glsim-box"   x="290"  y="0" width="18" height="14"/>
-    <text class="sublabel"    x="316"  y="11" text-anchor="start">GL sim</text>
+    <text class="sublabel"    x="316"  y="11" style="text-anchor:start">GL sim</text>
     <rect class="synth-box"   x="410"  y="0" width="18" height="14"/>
-    <text class="sublabel"    x="436"  y="11" text-anchor="start">synthesis</text>
+    <text class="sublabel"    x="436"  y="11" style="text-anchor:start">synthesis</text>
     <rect class="signoff-box" x="550"  y="0" width="18" height="14"/>
-    <text class="sublabel"    x="576"  y="11" text-anchor="start">signoff (DRC / LVS / STA / antenna)</text>
+    <text class="sublabel"    x="576"  y="11" style="text-anchor:start">signoff (DRC / LVS / STA / antenna)</text>
     <rect class="integ-box"   x="900"  y="0" width="18" height="14"/>
-    <text class="sublabel"    x="926"  y="11" text-anchor="start">integration artefact</text>
+    <text class="sublabel"    x="926"  y="11" style="text-anchor:start">integration artefact</text>
   </g>
 
   <text class="tool" x="630" y="615" text-anchor="middle">Note: RTL sim and GL sim use distinct fills so the dashed equivalence-check arc reads at a glance.</text>
