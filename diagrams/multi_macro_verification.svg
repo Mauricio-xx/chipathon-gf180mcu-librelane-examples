@@ -181,12 +181,15 @@
   <!-- synth from the top edge (385, 440). No backward arrows.       -->
   <!-- ============================================================ -->
 
-  <!-- vertical drops from each macro's integ-box to the rail -->
-  <path class="rail"       d="M1155,150 L1155,410"/>
+  <!-- vertical drops from each macro's integ-box to the rail.
+       The counter rail exits to the right of both integ-boxes
+       (x=1265, outside the x=1070..1240 box range) so it does NOT
+       cross the alu_macro integ-box on its way down to y=410. -->
+  <path class="rail"       d="M1240,115 L1265,115 L1265,410"/>
   <path class="rail"       d="M1155,330 L1155,410"/>
 
   <!-- horizontal rail to a feeder column above chip-flow synth -->
-  <path class="rail"       d="M1155,410 L385,410"/>
+  <path class="rail"       d="M1265,410 L385,410"/>
 
   <!-- arrow drop into chip-flow synth top -->
   <path class="rail-arrow" d="M385,410 L385,440"/>
@@ -198,18 +201,18 @@
   <!-- LEGEND (moved below all tracks; viewBox grew to 660)          -->
   <!-- ============================================================ -->
   <g transform="translate(30,575)">
-    <rect class="rtl-box"     x="0"   y="0" width="18" height="14"/>
-    <text class="sublabel"    x="26"  y="11" text-anchor="start">RTL / source</text>
-    <rect class="rtlsim-box"  x="140" y="0" width="18" height="14"/>
-    <text class="sublabel"    x="166" y="11" text-anchor="start">RTL sim</text>
-    <rect class="glsim-box"   x="260" y="0" width="18" height="14"/>
-    <text class="sublabel"    x="286" y="11" text-anchor="start">GL sim</text>
-    <rect class="synth-box"   x="370" y="0" width="18" height="14"/>
-    <text class="sublabel"    x="396" y="11" text-anchor="start">synthesis</text>
-    <rect class="signoff-box" x="490" y="0" width="18" height="14"/>
-    <text class="sublabel"    x="516" y="11" text-anchor="start">signoff (DRC / LVS / STA / antenna)</text>
-    <rect class="integ-box"   x="830" y="0" width="18" height="14"/>
-    <text class="sublabel"    x="856" y="11" text-anchor="start">integration artefact</text>
+    <rect class="rtl-box"     x="0"    y="0" width="18" height="14"/>
+    <text class="sublabel"    x="26"   y="11" text-anchor="start">RTL / source</text>
+    <rect class="rtlsim-box"  x="160"  y="0" width="18" height="14"/>
+    <text class="sublabel"    x="186"  y="11" text-anchor="start">RTL sim</text>
+    <rect class="glsim-box"   x="290"  y="0" width="18" height="14"/>
+    <text class="sublabel"    x="316"  y="11" text-anchor="start">GL sim</text>
+    <rect class="synth-box"   x="410"  y="0" width="18" height="14"/>
+    <text class="sublabel"    x="436"  y="11" text-anchor="start">synthesis</text>
+    <rect class="signoff-box" x="550"  y="0" width="18" height="14"/>
+    <text class="sublabel"    x="576"  y="11" text-anchor="start">signoff (DRC / LVS / STA / antenna)</text>
+    <rect class="integ-box"   x="900"  y="0" width="18" height="14"/>
+    <text class="sublabel"    x="926"  y="11" text-anchor="start">integration artefact</text>
   </g>
 
   <text class="tool" x="630" y="615" text-anchor="middle">Note: RTL sim and GL sim use distinct fills so the dashed equivalence-check arc reads at a glance.</text>

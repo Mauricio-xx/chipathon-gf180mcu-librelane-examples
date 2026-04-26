@@ -68,31 +68,31 @@
   <text class="sub" x="165" y="256">Instantiates the two user macros and maps outputs to bidir pads.</text>
 
   <!-- counter macro box -->
-  <rect class="macro-frame" x="185" y="290" width="220" height="200" rx="6"/>
-  <text class="macro-label" x="295" y="315">u_counter</text>
+  <rect class="macro-frame" x="185" y="290" width="245" height="200" rx="6"/>
+  <text class="macro-label" x="307" y="315">u_counter</text>
   <text class="sub"  x="205" y="340">macro = counter (8-bit)</text>
   <text class="kv"   x="205" y="358">clk, rst_n, en</text>
   <text class="kv"   x="205" y="374">q[7:0]</text>
   <text class="sub"  x="205" y="400">standalone Classic flow:</text>
   <text class="kv"   x="205" y="416">librelane counter_macro.yaml</text>
   <text class="sub"  x="205" y="442">outputs for integration:</text>
-  <text class="kv"   x="205" y="458">counter.gds / .lef / .lib / .nl.v</text>
+  <text class="kv"   x="205" y="458">counter.{gds,lef,lib,nl.v}</text>
 
   <!-- alu_macro box -->
-  <rect class="macro-frame" x="495" y="290" width="220" height="200" rx="6"/>
-  <text class="macro-label" x="605" y="315">u_alu</text>
-  <text class="sub"  x="515" y="340">macro = alu_macro (4-bit, 8 ops)</text>
-  <text class="kv"   x="515" y="358">a_in, b_in, op_in</text>
-  <text class="kv"   x="515" y="374">-> result_out, zero_out, carry_out</text>
-  <text class="sub"  x="515" y="400">standalone Classic flow:</text>
-  <text class="kv"   x="515" y="416">librelane alu_macro.yaml</text>
-  <text class="sub"  x="515" y="442">outputs for integration:</text>
-  <text class="kv"   x="515" y="458">alu_macro.gds / .lef / .lib / .nl.v</text>
+  <rect class="macro-frame" x="465" y="290" width="245" height="200" rx="6"/>
+  <text class="macro-label" x="587" y="315">u_alu</text>
+  <text class="sub"  x="485" y="340">macro = alu_macro (4-bit, 8 ops)</text>
+  <text class="kv"   x="485" y="358">a_in, b_in, op_in</text>
+  <text class="kv"   x="485" y="374">-> {result,zero,carry}_out</text>
+  <text class="sub"  x="485" y="400">standalone Classic flow:</text>
+  <text class="kv"   x="485" y="416">librelane alu_macro.yaml</text>
+  <text class="sub"  x="485" y="442">outputs for integration:</text>
+  <text class="kv"   x="485" y="458">alu_macro.{gds,lef,lib,nl.v}</text>
 
   <!-- data flow from counter to ALU. The bus mapping moves to the
        bottom band so the arrow stays visually clean. -->
-  <path class="dataflow" d="M405,390 L495,390"/>
-  <text class="flow-note" x="450" y="383" text-anchor="middle" font-size="10">q[7:0]</text>
+  <path class="dataflow" d="M430,390 L465,390"/>
+  <text class="flow-note" x="447" y="383" text-anchor="middle" font-size="10">q[7:0]</text>
 
   <!-- bus + bidir mapping + integration note (below core frame) -->
   <rect x="150" y="495" width="600" height="92" fill="#fafafa" stroke="#ccc" stroke-width="1" rx="4"/>
@@ -106,11 +106,11 @@
   <text class="sub" x="540" y="528">[13:12] = zero, carry</text>
   <text class="sub" x="320" y="546">[16:14] = op</text>
   <text class="sub" x="430" y="546">[19:17] = 0 (reserved)</text>
-  <text class="sub" x="540" y="546" fill="#888" font-style="italic">chip_core_multi.sv</text>
+  <text class="sub" x="615" y="546" fill="#888" font-style="italic">chip_core_multi.sv</text>
   <line x1="160" y1="556" x2="740" y2="556" stroke="#ccc" stroke-width="1"/>
   <text class="sub" x="160" y="572" font-weight="bold">Integration via MACROS: in chip_top_multi_patch.yaml</text>
   <text class="sub" x="160" y="582" font-style="italic" fill="#666">
-    pulls each macro's .nl.v (logical netlist) + .lef (abstract) + .lib x9 corners + .gds (layout)
+    pulls each macro's .nl.v + .lef + .lib (x9 corners) + .gds
   </text>
 
   <!-- footer -->
